@@ -1,0 +1,124 @@
+{
+  "app": {
+    "name": "لوحة التحكم المتقدمة",
+    "subtitle": "لوحة الإدارة"
+  },
+  "menu": {
+    "countries": "الدول",
+    "cities": "المدن",
+    "overview": "نظرة عامة",
+    "analytics": "التحليلات",
+    "reports": "التقارير",
+    "salesReport": "تقرير المبيعات",
+    "userReport": "تقرير المستخدمين",
+    "revenueReport": "تقرير الإيرادات",
+    "customers": "العملاء",
+    "orders": "الطلبات",
+    "products": "المنتجات",
+    "allProducts": "جميع المنتجات",
+    "categories": "الفئات",
+    "inventory": "المخزون",
+    "marketing": "التسويق",
+    "campaigns": "الحملات",
+    "emailLists": "قوائم البريد الإلكتروني",
+    "socialMedia": "وسائل التواصل الاجتماعي",
+    "calendar": "التقويم",
+    "messages": "الرسائل",
+    "fileManager": "إدارة الملفات",
+    "search": "البحث",
+    "generalSettings": "الإعدادات العامة",
+    "billing": "الفواتير",
+    "notifications": "الإشعارات",
+    "helpSupport": "المساعدة والدعم",
+    "dashboard": "لوحة التحكم",
+    "tools": "الأدوات",
+    "settings": "الإعدادات",
+    "users": "المستخدمين"
+  },
+
+  "workspace": {
+    "switch": "تبديل مساحة العمل",
+    "create": "إنشاء مساحة عمل جديدة"
+  },
+  "user": {
+    "name": "مستخدم الإدارة",
+    "email": "admin@company.com",
+    "account": "الحساب",
+    "billing": "الفواتير",
+    "notifications": "الإشعارات",
+    "signOut": "تسجيل الخروج"
+  },
+  "common": {
+    "more": "المزيد",
+    "edit": "تحرير",
+    "addToFavorites": "إضافة للمفضلة",
+    "share": "مشاركة"
+  },
+  "settings": {
+    "add": "إضافة إعداد"
+  },
+  "validation": {},
+  "forms": {},
+  "labels": {},
+  "buttons": {
+    "add": "إضافة",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "back": "عودة",
+    "show_all": "عرض الكل",
+    "confirm": "تأكيد",
+    "login": "تسجيل الدخول",
+    "sign_out": "تسجيل خروج",
+    "search": "بحث",
+    "edit": "تعديل",
+    "view": "عرض",
+    "delete": "حذف",
+    "noKeepMe": "لا اريد",
+    "ok": "نعم اريد",
+    "send": "ارسال",
+    "accept": "قبول",
+    "reject": "رفض"
+  },
+
+  "navigation": "التنقل",
+  "dashboard": "لوحة التحكم",
+  "analytics": "التحليلات",
+  "users": "المستخدمين",
+  "signOut": "تسجيل الخروج",
+  "adminPanel": "لوحة الإدارة",
+
+  "search": "بحث...",
+  "profile": "الملف الشخصي",
+  "notifications": "الإشعارات",
+
+  "welcomeBack": "مرحباً بعودتك!",
+  "businessToday": "إليك ما يحدث في عملك اليوم.",
+  "totalRevenue": "إجمالي الإيرادات",
+  "activeUsers": "المستخدمون النشطون",
+  "sales": "المبيعات",
+  "totalOrders": "إجمالي الطلبات",
+  "conversionRate": "معدل التحويل",
+  "revenueOverview": "نظرة عامة على الإيرادات",
+  "userActivity": "نشاط المستخدم",
+  "monthlyRevenue": "الإيرادات الشهرية للأشهر الستة الماضية",
+  "dailyActiveUsers": "المستخدمون النشطون يومياً هذا الأسبوع",
+  "fromLastMonth": "من الشهر الماضي",
+
+  "name": "الاسم",
+  "email": "البريد الإلكتروني",
+  "role": "الدور",
+  "status": "الحالة",
+  "actions": "الإجراءات",
+  "lastLogin": "آخر تسجيل دخول",
+  "searchUsers": "البحث عن المستخدمين...",
+  "filter": "تصفية",
+  "addUser": "إضافة مستخدم",
+
+  "toggleTheme": "تبديل المظهر",
+  "light": "فاتح",
+  "dark": "داكن",
+
+  "language": "اللغة",
+  "english": "English",
+  "arabic": "العربية"
+}

@@ -1,0 +1,123 @@
+{
+  "app": {
+    "name": "Dashboard Pro",
+    "subtitle": "Admin Panel"
+  },
+  "menu": {
+    "countries": "Countries",
+    "cities": "Cities",
+    "overview": "Overview",
+    "analytics": "Analytics",
+    "reports": "Reports",
+    "salesReport": "Sales Report",
+    "userReport": "User Report",
+    "revenueReport": "Revenue Report",
+    "customers": "Customers",
+    "orders": "Orders",
+    "products": "Products",
+    "allProducts": "All Products",
+    "categories": "Categories",
+    "inventory": "Inventory",
+    "marketing": "Marketing",
+    "campaigns": "Campaigns",
+    "emailLists": "Email Lists",
+    "socialMedia": "Social Media",
+    "calendar": "Calendar",
+    "messages": "Messages",
+    "fileManager": "File Manager",
+    "search": "Search",
+    "generalSettings": "General Settings",
+    "billing": "Billing",
+    "notifications": "Notifications",
+    "helpSupport": "Help & Support",
+    "dashboard": "Dashboard",
+    "tools": "Tools",
+    "settings": "Settings",
+    "users": "Users"
+  },
+  "workspace": {
+    "switch": "Switch Workspace",
+    "create": "Create New Workspace"
+  },
+  "user": {
+    "name": "Admin User",
+    "email": "admin@company.com",
+    "account": "Account",
+    "billing": "Billing",
+    "notifications": "Notifications",
+    "signOut": "Sign Out"
+  },
+  "common": {
+    "more": "More",
+    "edit": "Edit",
+    "addToFavorites": "Add to Favorites",
+    "share": "Share"
+  },
+  "settings": {
+    "add": "Add Setting"
+  },
+  "validation": {},
+  "forms": {},
+  "labels": {},
+  "buttons": {
+    "add": "Add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "show_all": "Show All",
+    "confirm": "Confirm",
+    "login": "Login",
+    "sign_out": "Sign Out",
+    "search": "Search",
+    "edit": "Edit",
+    "view": "View",
+    "delete": "Delete",
+    "noKeepMe": "No, I don't",
+    "ok": "Yes, I do",
+    "send": "Send",
+    "accept": "Accept",
+    "reject": "Reject"
+  },
+
+  "navigation": "Navigation",
+  "dashboard": "Dashboard",
+  "analytics": "Analytics",
+  "users": "Users",
+  "signOut": "Sign Out",
+  "adminPanel": "Admin Panel",
+
+  "search": "Search...",
+  "profile": "Profile",
+  "notifications": "Notifications",
+
+  "welcomeBack": "Welcome back!",
+  "businessToday": "Here's what's happening with your business today.",
+  "totalRevenue": "Total Revenue",
+  "activeUsers": "Active Users",
+  "sales": "Sales",
+  "totalOrders": "Total Orders",
+  "conversionRate": "Conversion Rate",
+  "revenueOverview": "Revenue Overview",
+  "userActivity": "User Activity",
+  "monthlyRevenue": "Monthly revenue for the past 6 months",
+  "dailyActiveUsers": "Daily active users this week",
+  "fromLastMonth": "from last month",
+
+  "name": "Name",
+  "email": "Email",
+  "role": "Role",
+  "status": "Status",
+  "actions": "Actions",
+  "lastLogin": "Last Login",
+  "searchUsers": "Search users...",
+  "filter": "Filter",
+  "addUser": "Add User",
+
+  "toggleTheme": "Toggle theme",
+  "light": "Light",
+  "dark": "Dark",
+
+  "language": "Language",
+  "english": "English",
+  "arabic": "العربية"
+}

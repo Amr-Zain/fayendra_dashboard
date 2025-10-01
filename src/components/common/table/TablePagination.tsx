@@ -1,0 +1,113 @@
+import { Table as TanStackTable } from '@tanstack/react-table'
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from 'lucide-react'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Meta } from '@/types/api/http'
+import { Button } from '@/components/ui/button'
+
+export function DataTablePagination<TData>({
+  table,
+  pageSizeOptions = [10, 20, 30, 40, 50],
+  meta
+}: {
+  table: TanStackTable<TData>
+  pageSizeOptions?: number[]
+  meta?: Meta 
+}) {
+  const state = table.getState().pagination
+  const currentPage = meta?.current_page ?? state.pageIndex + 1
+  const lastPage = meta?.last_page ?? table.getPageCount()
+  const canPrev = meta ? currentPage > 1 : table.getCanPreviousPage()
+  const canNext = meta
+    ? lastPage ? currentPage < lastPage : true
+    : table.getCanNextPage()
+
+    const goFirst = () => table.setPageIndex(0);
+    const goPrev = () => table.previousPage();
+    const goNext = () => table.nextPage();
+    const goLast = () => table.setPageIndex(Math.max(0, (lastPage ?? 1) - 1));
+  
+
+  return (
+    <div className="flex items-center justify-between px-2">
+      <div className="flex-1 text-sm text-muted-foreground">
+        {table.getFilteredSelectedRowModel().rows.length} of{' '}
+        {table.getFilteredRowModel().rows.length} row(s) selected.
+      </div>
+      
+      <div className="flex items-center space-x-6 lg:space-x-8">
+        <div className="flex items-center space-x-2">
+          <p className="text-sm font-medium">Rows per page</p>
+          <Select
+            value={`${state.pageSize}`}
+            onValueChange={(value) => table.setPageSize(Number(value))}
+          >
+            <SelectTrigger className="h-8 w-[70px]">
+              <SelectValue placeholder={state.pageSize} />
+            </SelectTrigger>
+            <SelectContent side="top">
+              {pageSizeOptions.map((pageSize) => (
+                <SelectItem key={pageSize} value={`${pageSize}`}>
+                  {pageSize}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+          Page {state.pageIndex + 1} of {table.getPageCount()}
+        </div>
+
+         <div className="flex items-center space-x-2">
+      <Button
+        variant="outline"
+        className="hidden h-8 w-8 p-0 lg:flex"
+        onClick={goFirst}
+        disabled={!canPrev}
+      >
+        <span className="sr-only">Go to first page</span>
+        <ChevronsLeft className="h-4 w-4" />
+      </Button>
+      <Button
+        variant="outline"
+        className="h-8 w-8 p-0"
+        onClick={goPrev}
+        disabled={!canPrev}
+      >
+        <span className="sr-only">Go to previous page</span>
+        <ChevronLeft className="h-4 w-4" />
+      </Button>
+      <Button
+        variant="outline"
+        className="h-8 w-8 p-0"
+        onClick={goNext}
+        disabled={!canNext}
+      >
+        <span className="sr-only">Go to next page</span>
+        <ChevronRight className="h-4 w-4" />
+      </Button>
+      <Button
+        variant="outline"
+        className="hidden h-8 w-8 p-0 lg:flex"
+        onClick={goLast}
+        disabled={!canNext || !lastPage}
+      >
+        <span className="sr-only">Go to last page</span>
+        <ChevronsRight className="h-4 w-4" />
+      </Button>
+    </div>
+      </div>
+    </div>
+  )
+}
