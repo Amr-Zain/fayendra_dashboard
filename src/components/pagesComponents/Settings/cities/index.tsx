@@ -5,12 +5,13 @@ import {
   DataTable,
 } from '@/components/common/table/AppTable'
 import { RowActions } from '@/components/common/table/RowActions'
-import { Link } from '@tanstack/react-router'
+import { Link, useSearch } from '@tanstack/react-router'
 import { City } from '@/types/api/country'
-import { useCityMutation } from '@/hooks/useCityMutations'
+import { useStatusMutation } from '@/hooks/useStatusMutations'
 import { useState } from 'react'
 import ConfirmModal from '@/components/common/uiComponents/ConfirmModal'
 import { actions, cityColumns, filters } from './config'
+import { citiesQueryKeys } from '@/util/queryKeysFactory'
 
 
 const Cities = ({ data }: { data: ApiResponse<City[],'cities'> }) => {
@@ -24,12 +25,25 @@ const Cities = ({ data }: { data: ApiResponse<City[],'cities'> }) => {
       type: 'active',
       id: '',
     })
-  
+      const search = useSearch({ from: '/_main/settings/cities/' })
+    
     const { mutateAsync: ChangeActiveMutate, isPending: activeLoading } =
-      useCityMutation(openModal.id, 'active')
+      useStatusMutation(
+        openModal.id,
+        'active',
+        'cities',
+        citiesQueryKeys.getCity(openModal.id),
+        [citiesQueryKeys.filterd(search)],
+      )
     
     const { mutateAsync: ChangeDeleteMutate, isPending: deleteLoading } =
-      useCityMutation(openModal.id, 'delete')
+      useStatusMutation(
+        openModal.id,
+        'delete',
+        'cities',
+        citiesQueryKeys.getCity(openModal.id),
+        [citiesQueryKeys.filterd(search)],
+      )
   const handleConfirm = async () => {
     if (openModal.type === 'active') await ChangeActiveMutate({ is_active: !data.data.cities.find(city=>+openModal.id === city.id)?.is_active })
     if (openModal.type === 'delete') await ChangeDeleteMutate({})

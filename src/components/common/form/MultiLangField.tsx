@@ -111,17 +111,11 @@ function MultiLangField<T extends FieldValues>({
     return hasValue;
   };
 
-  const completedCount = watchedFields.filter(
-    (field) => field && String(field).trim().length > 0
-  ).length;
-  const progressPercentage = (completedCount / languages.length) * 100;
-
   return (
-    <div className={`multi-lang-field-wrapper space-y-4 ${className}`}>
+    <div className={`multi-lang-field-wrapper ${className}`}>
       {label && <FormLabel className="text-sm font-medium">{label}</FormLabel>}
 
-      {/* Language Tabs */}
-      <div className="flex flex-wrap gap-2 p-3 bg-muted/50 rounded-lg border">
+      <div className="flex flex-wrap gap-2 mb-2 p-0 rounded-lg">
         {languages.map((lang, idx) => (
           <Button
             key={`lang_btn_${lang.key}`}
@@ -130,7 +124,7 @@ function MultiLangField<T extends FieldValues>({
             size="sm"
             onClick={() => setCurrentLang(idx)}
             disabled={disabled}
-            className={`flex items-center gap-2 h-9 ${
+            className={`flex items-center gap-2 h-6 text-sm rounded-0 ${
               currentLang === idx
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "hover:bg-muted"
@@ -140,56 +134,12 @@ function MultiLangField<T extends FieldValues>({
               <Check className="w-3 h-3 text-green-600" />
             )}
             <span>{lang.label}</span>
-            {getFieldStatus(idx) && (
-              <Badge variant="secondary" className="ml-1 h-4 px-1 text-xs">
-                ✓
-              </Badge>
-            )}
+            
           </Button>
         ))}
       </div>
-
-      {/* Field Content */}
       <div className="relative">
         {languages.map((lang, idx) => renderField(lang.key, idx))}
-      </div>
-
-      {/* Progress Indicator */}
-      <div className="space-y-2">
-       {/*  <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Translation Progress</span>
-          <span className="font-medium">
-            {completedCount} / {languages.length} completed
-          </span>
-        </div>
-
-        <Progress value={progressPercentage} className="h-2" /> */}
-
-        <div className="flex flex-wrap gap-2">
-          {languages.map((lang, idx) => (
-            <div
-              key={`status_${lang.key}`}
-              className="flex items-center gap-1 text-xs"
-            >
-              <div
-                className={`w-2 h-2 rounded-full ${
-                  getFieldStatus(idx)
-                    ? "bg-green-500"
-                    : "bg-muted-foreground/30"
-                }`}
-              />
-              <span
-                className={
-                  getFieldStatus(idx)
-                    ? "text-green-600"
-                    : "text-muted-foreground"
-                }
-              >
-                {lang.label}
-              </span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

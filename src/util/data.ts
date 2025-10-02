@@ -1,6 +1,6 @@
-import { BarChart3, Bell, Calendar, CreditCard, Database, FileText, FolderOpen, HelpCircle, Home, Mail, Search, Settings, ShoppingCart, TrendingUp, Users, Users2 } from "lucide-react";
+import { BarChart3, Bell, Book, Calendar, CreditCard, Database, FileText, FolderOpen, HelpCircle, Home, Mail, Search, Settings, ShoppingCart, TrendingUp, Users, Users2 } from "lucide-react";
 
-export const getDashboardMenuItems :MenuItem[] = [
+export const getDashboardMenuItems: MenuItem[] = [
   {
     title: 'menu.overview',
     url: '/',
@@ -11,15 +11,25 @@ export const getDashboardMenuItems :MenuItem[] = [
     url: '/analytics',
     icon: BarChart3,
     badge: 'Pro',
-/*     permission: 'statistics.index'
- */  },
+    /*     permission: 'statistics.index'
+     */
+  },
   {
-    title: 'menu.users' ,
+    title: 'menu.pages',
+    url: '/pages',
+    icon: Book,
+    //badge: 'Pro',
+    /*     permission: 'users.index'
+     */
+  },
+  {
+    title: 'menu.users',
     url: '/users',
     icon: Users2,
     //badge: 'Pro',
-/*     permission: 'users.index'
- */  },
+    /*     permission: 'users.index'
+     */
+  },
 
   {
     title: 'menu.orders',
@@ -40,7 +50,6 @@ export const getDashboardMenuItems :MenuItem[] = [
       { title: 'menu.inventory', url: '/products/inventory' },
     ],
   },
-  
 ]
 export const getToolsMenuItems : MenuItem[] = [
   {
@@ -68,7 +77,7 @@ export const getToolsMenuItems : MenuItem[] = [
 export const getSettingsMenuItems: MenuItem[] = [
   {
     title: 'menu.generalSettings',
-    url: '/settings',
+    url: '/settings/general',
     icon: Settings,
   },
   {

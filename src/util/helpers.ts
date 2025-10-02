@@ -89,7 +89,7 @@ export function generateInitialValues(data: any) {
 
 export function generateFinalOut(initialValues: any, values: any) {
     const finalOut: any = {
-        'image[media]': values?.image,
+        'image': values?.image,
     };
 
     const languages = ['ar', 'en'];
@@ -117,11 +117,7 @@ export function generateFinalOut(initialValues: any, values: any) {
         }
     });
 
-    delete finalOut.image;
 
-    if (initialValues?.image === finalOut['image[media]']) {
-        delete finalOut['image[media]'];
-    }
     return finalOut
 }
 

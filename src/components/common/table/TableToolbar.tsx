@@ -118,6 +118,7 @@ export function DataTableToolbar<TData>({
       <div className="flex flex-1 items-center space-x-2 space-y-2 flex-wrap">
         {searchKeyId && (
           <Input
+            type='search'
             placeholder={`Filter ${searchKeyId}...`}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}

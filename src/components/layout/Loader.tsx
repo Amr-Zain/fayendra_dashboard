@@ -1,7 +1,6 @@
 import LoadingJson from '@/assets/icons/animated/loading.json'
 import { cn } from '@/lib/utils'
 import Lottie from 'lottie-react'
-import { useSidebar } from '../ui/sidebar'
 
 function LoaderPage() {
 

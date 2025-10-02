@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { ApiResponse } from '@/types/api/http'
 import { useNavigate } from '@tanstack/react-router'
 import { generateFinalOut, generateInitialValues } from '@/util/helpers'
+import { countriesQueryKeys } from '@/util/queryKeysFactory'
 
 export type Country = {
   id?: number
@@ -35,7 +36,6 @@ export type Country = {
   nationality_ar?: string
 }
 
-// Schema: الأساسيات + EN/AR Required
 const schema = z.object({
   is_active: z.union([z.boolean(), z.number().int().min(0).max(1)]).optional(),
   phone_code: z.coerce.number({ message: 'Required => numeric value' }),
@@ -66,8 +66,7 @@ const schema = z.object({
   currency_ar: z.string().min(1, 'Required'),
   nationality_ar: z.string().min(1, 'Required'),
 
-  // صورة العلم اختياري
-  flag: z.any().optional(),
+  flag: z.string(),
 })
 
 type FormData = z.infer<typeof schema>
@@ -77,120 +76,93 @@ export default function CountryForm({ country }: { country?: Country }) {
 
   const fields: FieldProp<FormData>[] = [
     {
+      type: 'imgUploader',
+      name: 'flag',
+      label: 'Flag (optional)',
+      span: 2,
+      inputProps: {
+        maxFiles: 1,
+        acceptedFileTypes: ['image/*'],
+        apiEndpoint: '/media/upload',
+        model: 'image',
+        baseUrl: import.meta.env.VITE_BASE_URL_API,
+        
+      },
+    },
+    {
       type: 'number',
       name: 'phone_code',
       label: 'Phone Code',
       placeholder: 'e.g. 20',
-      span: 1,
-      control: {} as Control<FormData>,
     },
     {
       type: 'number',
       name: 'phone_length',
       label: 'Phone Length',
       placeholder: 'e.g. 10',
-      span: 1,
-      control: {} as Control<FormData>,
     },
     {
       type: 'text',
       name: 'short_name',
       label: 'Short Name',
       placeholder: 'e.g. EGY',
-      span: 1,
-      control: {} as Control<FormData>,
     },
     {
       type: 'select',
       name: 'continent',
       label: 'Continent',
-      span: 1,
+      inputProps: {
+        placeholder: 'Select Your Continent',
+        options: [
+          { label: 'africa', value: 'africa' },
+          { label: 'europe', value: 'europe' },
+          { label: 'asia', value: 'asia' },
+          { label: 'south_america', value: 'south_america' },
+          { label: 'north_america', value: 'north_america' },
+          { label: 'australia', value: 'australia' },
+          { label: 'antarctica', value: 'antarctica' },
+        ],
+      },
       control: {} as Control<FormData>,
-      options: [
-        { label: 'africa', value: 'africa' },
-        { label: 'europe', value: 'europe' },
-        { label: 'asia', value: 'asia' },
-        { label: 'south_america', value: 'south_america' },
-        { label: 'north_america', value: 'north_america' },
-        { label: 'australia', value: 'australia' },
-        { label: 'antarctica', value: 'antarctica' },
-      ],
     },
 
-    // —— MultiLang: EN + AR فقط ——
     {
       type: 'multiLangField',
       name: 'name' as any,
       label: 'Name',
       placeholder: 'Egypt',
-      span: 1,
       control: {} as Control<FormData>,
-      inputProps: {
-        labeling: { en: 'Name (EN)', ar: 'الاسم (AR)' },
-      },
     },
     {
       type: 'multiLangField',
       name: 'slug' as any,
       label: 'Slug',
       placeholder: 'egypt',
-      span: 1,
-      control: {} as Control<FormData>,
-      inputProps: {
-        labeling: { en: 'Slug (EN)', ar: 'Slug (AR)' },
-      },
     },
     {
       type: 'multiLangField',
       name: 'currency' as any,
       label: 'Currency',
       placeholder: 'EGP',
-      span: 1,
-      control: {} as Control<FormData>,
-      inputProps: {
-        labeling: { en: 'Currency (EN)', ar: 'العملة (AR)' },
-      },
     },
     {
       type: 'multiLangField',
       name: 'nationality' as any,
       label: 'Nationality',
       placeholder: 'Egyptian',
-      span: 1,
-      control: {} as Control<FormData>,
-      inputProps: {
-        labeling: { en: 'Nationality (EN)', ar: 'الجنسية (AR)' },
-      },
-    },
-
-    {
-      type: 'imgUploader',
-      name: 'flag' as any,
-      label: 'Flag (optional)',
-      span: 1,
-      control: {} as Control<FormData>,
-      inputProps: {
-        maxFiles: 1,
-        acceptedFileTypes: ['image/*'],
-        apiEndpoint: 'upload-media',
-        model: 'country_flag',
-        shapeType: 'picture-card',
-      },
     },
 
     {
       type: 'checkbox',
       name: 'is_active',
       label: 'Active',
-      span: 1,
-      control: {} as Control<FormData>,
     },
   ]
 
   const { mutate, isPending } = useMutate({
     endpoint: country?.id ? `countries/${country.id}` : 'countries',
     mutationKey: ['country', country?.id],
-    mutationOptions: { meta: { invalidates: [['countries', 'list']] } },
+    mutationOptions: { meta: { invalidates: [countriesQueryKeys.all()] } },
     method: country?.id ? 'put' : 'post',
     onSuccess: (data: ApiResponse) => {
       toast.success(data.message)

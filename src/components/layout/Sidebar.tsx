@@ -39,6 +39,7 @@ import {
 } from '@/util/data'
 import { MenuItem } from './MenuItem'
 import { cn } from '@/lib/utils'
+import { Logo } from '../common/Icons'
 
 // App Sidebar Component
 export function AppSidebar() {
@@ -73,28 +74,38 @@ export function AppSidebar() {
     >
       <SidebarHeader className="group">
         <SidebarMenu>
-          <SidebarMenuItem
-          >
+          <SidebarMenuItem>
             <SidebarMenuButton
               size="lg"
-              className={cn(
-                'data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground relative',
-                state === 'collapsed' ? 'flex group-hover:hidden' : 'flex',
-              )}
+              className={cn('justify-between', state === 'collapsed'? "hover:bg-transparent":'')}
             >
-              <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center shrink-0">
-                <PieChart className="w-5 h-5 text-white" />
+              <div
+                className={cn(
+                  'data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground relative',
+                  state === 'collapsed'
+                    ? 'flex group-hover:hidden'
+                    : 'flex gap-2',
+                )}
+              >
+                <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center shrink-0 shadow-glow">
+                  <Logo className="w-5 h-5 text-white" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <h2 className="font-semibold text-sidebar-foreground truncate">
+                    {t('dashboard')}
+                  </h2>
+                  <p className="text-xs text-sidebar-foreground/70 truncate">
+                    {t('adminPanel')}
+                  </p>
+                </div>
               </div>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <h2 className="font-semibold text-sidebar-foreground truncate">
-                  {t('dashboard')}
-                </h2>
-                <p className="text-xs text-sidebar-foreground/70 truncate">
-                  {t('adminPanel')}
-                </p>
-              </div>
+              <SidebarTrigger
+                className={cn(
+                  'p-2 w-7 h-7 rounded-full transition-colors cursor-w-resize',
+                  state === 'expanded' ? 'flex' : 'hidden group-hover:flex',
+                )}
+              />
             </SidebarMenuButton>
-            <SidebarTrigger className={cn("p-2 w-7 h-7 rounded-full transition-colors cursor-w-resize", state === 'expanded'?"flex":'hidden group-hover:flex')} />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

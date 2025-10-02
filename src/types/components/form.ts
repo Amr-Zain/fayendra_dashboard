@@ -12,7 +12,7 @@ interface BaseFieldProps<T extends FieldValues> {
     label?: string | React.ReactNode;
     span?: number;
     placeholder?: string;
-    control: Control<T>;
+    control?: Control<T>;
 }
 
 // Option type for select and radio fields

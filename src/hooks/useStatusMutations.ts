@@ -3,36 +3,37 @@ import { User } from '@/types/api/user'
 import { useTranslation } from 'react-i18next'
 import { useMutate } from './UseMutate'
 import { toast } from 'sonner'
-import { citiesQueryKeys } from '@/util/queryKeysFactory'
-import { useSearch } from '@tanstack/react-router'
+import { QueryKey } from '@tanstack/react-query'
 
-export const useCityMutation = (
+export const useStatusMutation = (
   id: string,
-  type: 'active'  | 'delete',
+  type: 'active' | 'delete',
+  endpoint: string,
+  mutationKey: QueryKey,
+  invalidates: QueryKey[],
 ) => {
   const { t } = useTranslation()
 
   const mutationMapping = {
     active: {
-      mutationKey: citiesQueryKeys.getCity(id),
-      endpoint: `cities/${id}`,
+      mutationKey,
+      endpoint: `${endpoint}/${id}`,
       method: 'put',
       successMessage: t('status_changed_successfully'),
     },
     delete: {
-      mutationKey: citiesQueryKeys.getCity(id),
-      endpoint: `cities/${id}`,
+      mutationKey,
+      endpoint: `${endpoint}/${id}`,
       method: 'delete',
-      successMessage: t('user_deleted_successfully'),
+      successMessage: t('deleted_successfully'),
     },
   } as const
-  const search = useSearch({ from: '/_main/settings/cities/' })
   const { mutateAsync, isPending } = useMutate<ApiResponse<User>>({
     mutationKey: [mutationMapping[type].mutationKey],
     endpoint: mutationMapping[type].endpoint,
     method: mutationMapping[type].method,
     mutationOptions: {
-      meta: { invalidates: [citiesQueryKeys.filterd(search)] },
+      meta: { invalidates: invalidates },
     },
     onSuccess: (data) => {
       toast.success(data.message || mutationMapping[type].successMessage)

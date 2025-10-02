@@ -142,7 +142,7 @@ const AppUploader = <T extends object = Record<string, any>>({
     const formData = new FormData();
     formData.append("file", file);
     formData.append("attachment_type", attachmentType);
-    formData.append("model", model || "applications");
+    formData.append('collection', model || 'applications')
 
     const { data } = await axiosInstance({
       method: "POST",
@@ -248,7 +248,7 @@ const AppUploader = <T extends object = Record<string, any>>({
         } else if (field) {
           // Fallback to field.onChange if onChange is not provided
           if (singleFile) {
-            field.onChange(uploadedFiles[0]);
+            field.onChange(uploadedFiles[0]['hash']);
           } else {
             // For multiple files, merge with existing field value
             const existingFiles = Array.isArray(field.value) ? field.value : [];

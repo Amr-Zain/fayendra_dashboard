@@ -2,6 +2,9 @@ import { ColumnHeader } from '@/components/common/table/ColumnHeader'
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table'
 import { Filter } from '@/types/components/table'
 import { Switch } from '@/components/ui/switch'
+import { Dispatch, SetStateAction } from 'react'
+import { hasPermission } from '@/util/helpers'
+import { countriesQueryKeys } from '@/util/queryKeysFactory'
 
 export type Country = {
   id: number
@@ -28,7 +31,15 @@ export type Country = {
 
 const columnHelper = createColumnHelper<Country>()
 
-export const countryColumns = (): ColumnDef<Country,any>[] => [
+export const countryColumns = (
+  setModal: Dispatch<
+    SetStateAction<{
+      type: 'active' | 'delete'
+      show: boolean
+      id: string
+    }>
+  >,
+) => [
   columnHelper.accessor('name', {
     header: ({ column }) => (
       <ColumnHeader column={column} title="Country Name" />
@@ -84,12 +95,24 @@ export const countryColumns = (): ColumnDef<Country,any>[] => [
   }),
   columnHelper.accessor('is_active', {
     header: ({ column }) => <ColumnHeader column={column} title="Status" />,
-    cell: ({ getValue }) => {
+    cell: ({ row, getValue }) => {
       const isActive = getValue()
       return (
         <div className="flex items-center justify-center">
-          <div className="p-1 rounded">
-            <Switch checked={isActive} dir="ltr" disabled />
+          <div
+            onClick={() =>
+              setModal({
+                show: true,
+                type: 'active',
+                id: row.original.id.toString(),
+              })
+            }
+            className="cursor-pointer p-1 rounded hover:bg-muted transition-colors"
+            title={
+              isActive ? 'Click to deactivate city' : 'Click to activate city'
+            }
+          >
+            <Switch checked={isActive} dir="ltr" />
           </div>
           <div className="ml-2">
             <span
@@ -126,7 +149,7 @@ export const countryColumns = (): ColumnDef<Country,any>[] => [
     enableSorting: true,
     sortingFn: 'datetime',
   }),
-]
+]as ColumnDef<Country>[]
 
 export const countryFilters: Filter[] = [
   {
@@ -146,5 +169,34 @@ export const countryFilters: Filter[] = [
       { label: 'DESC', value: 'desc' },
     ],
     multiple: false,
+  },
+]
+
+export const actions =(
+  setModal: Dispatch<
+    SetStateAction<{
+      type: 'active'  | 'delete'
+      show: boolean
+      id: string
+    }>
+  >,
+) => [
+  {
+    label: 'Edit',
+    to: '/settings/countries/edit/$id',
+    params: (row: Country) => ({ id: row.id.toString() }),
+    //disabled: hasPermission('cities.edit'),
+    queryKey: (id:string)=>countriesQueryKeys.getCountry(id)
+  },
+  {
+    label: 'Delete',
+    danger: true,
+     onClick: (row: Country) =>
+      setModal({ show: true, type: 'delete', id: row.id.toString() }),
+  },
+  {
+    label: 'Activate/Deactivate city',
+     onClick: (row: Country) =>
+      setModal({ show: true, type: 'active', id: row.id.toString() }),
   },
 ]

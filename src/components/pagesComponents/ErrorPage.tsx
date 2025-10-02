@@ -4,6 +4,7 @@ import { useNavigate, useRouter } from "@tanstack/react-router";
 import offlineJson from "@/assets/icons/animated/NoInternet.json";
 import serverDownJson from "@/assets/icons/animated/Livechatbot.json";
 import { t } from "i18next";
+import { Button } from "../ui/button";
 
 const ErrorPage = ({ error }: { error: unknown }) => {
   const navigate = useNavigate();
@@ -22,8 +23,8 @@ const ErrorPage = ({ error }: { error: unknown }) => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white text-center">
-      <div className="flex flex-col items-center justify-center h-screen p-6 text-center bg-white">
+    <div className="min-h-screen flex items-center justify-center  text-center">
+      <div className="flex flex-col items-center justify-center h-screen p-6 text-center">
         <Lottie
           animationData={serverDownJson}
           loop
@@ -32,13 +33,12 @@ const ErrorPage = ({ error }: { error: unknown }) => {
         <h1 className="text-3xl font-bold mb-4 text-red-600">
           {t("server_error_page.title")}
         </h1>
-        <p className="text-gray-700 mb-6">{message}</p>
-        <button
+        <p className="text-foreground mb-6">{message}</p>
+        <Button
           onClick={() => window.location.replace("/")}
-          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
         >
           {t("server_error_page.back_to_home_button")}
-        </button>
+        </Button>
       </div>
     </div>
   );

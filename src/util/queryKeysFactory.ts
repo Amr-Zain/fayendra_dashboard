@@ -43,3 +43,9 @@ export const countriesQueryKeys = {
     getCountry: (countryId?: string)=>[countriesQueryKeys.all(), 'one', { countryId }],
     filterd: (search: any) => [...countriesQueryKeys.all(), search] as const,
 }
+
+export const pagesQueryKeys = {
+  all: () => ['countries', 'paginate'],
+  getPage: (pageId?: string) => [pagesQueryKeys.all(), 'one', { pageId }],
+  filterd: (search: any) => [...countriesQueryKeys.all(), search] as const,
+}

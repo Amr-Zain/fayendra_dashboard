@@ -170,7 +170,7 @@ export const inputMapper = <T extends FieldValues>(): InputMapper<T> =>  ({
     const inputProps = ensureObj(props.inputProps)
     return (
       <PhoneField
-        control={props.control}
+        control={props.control!}
         phoneCodeName={
           (inputProps.phoneCodeName ?? `${String(props.name)}_code`) as Path<T>
         }
@@ -234,7 +234,7 @@ export const inputMapper = <T extends FieldValues>(): InputMapper<T> =>  ({
     const inputProps = ensureObj(props.inputProps)
     return (
       <MultiLangField
-        control={props.control}
+        control={props.control!}
         name={String(props.name)}
         type={inputProps.type ?? 'input'}
         label={inputProps.labeling}

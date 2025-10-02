@@ -59,12 +59,13 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({
 
   // Handle file changes
   const handleChange = (value: any) => {
+    console.log(value)
     if (multiple) {
       // For multiple files, expect an array
       field.onChange(value)
     } else {
       // For single file, pass just the file data
-      field.onChange(value)
+      field.onChange(value.hash)
     }
   }
 

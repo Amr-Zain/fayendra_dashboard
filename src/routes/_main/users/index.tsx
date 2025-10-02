@@ -35,7 +35,7 @@ export const Route = createFileRoute('/_main/users/')({
       search,
     )
   },
-   beforeLoad:({location})=> checkPermission(/* location.href */'users.index'),
+   //beforeLoad:({location})=> checkPermission(/* location.href */'users.index'),
 })
 
 function Index() {

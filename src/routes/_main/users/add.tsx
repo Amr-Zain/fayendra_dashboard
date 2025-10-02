@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/_main/users/add')({
     component: RouteComponent,
-       beforeLoad:({location})=> checkPermission(/* location.href */'users.add'),
+       //beforeLoad:({location})=> checkPermission(/* location.href */'users.add'),
     
 })
 

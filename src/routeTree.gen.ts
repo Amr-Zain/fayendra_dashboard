@@ -17,7 +17,9 @@ import { Route as MainIndexRouteImport } from './routes/_main/index'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as MainUsersIndexRouteImport } from './routes/_main/users/index'
 import { Route as MainProfileIndexRouteImport } from './routes/_main/profile/index'
+import { Route as MainPagesIndexRouteImport } from './routes/_main/pages/index'
 import { Route as MainUsersAddRouteImport } from './routes/_main/users/add'
+import { Route as MainPagesAddRouteImport } from './routes/_main/pages/add'
 import { Route as MainSettingsCountriesIndexRouteImport } from './routes/_main/settings/countries/index'
 import { Route as MainSettingsCitiesIndexRouteImport } from './routes/_main/settings/cities/index'
 import { Route as MainUsersShowIdRouteImport } from './routes/_main/users/show/$id'
@@ -65,9 +67,19 @@ const MainProfileIndexRoute = MainProfileIndexRouteImport.update({
   path: '/profile/',
   getParentRoute: () => MainRouteRoute,
 } as any)
+const MainPagesIndexRoute = MainPagesIndexRouteImport.update({
+  id: '/pages/',
+  path: '/pages/',
+  getParentRoute: () => MainRouteRoute,
+} as any)
 const MainUsersAddRoute = MainUsersAddRouteImport.update({
   id: '/users/add',
   path: '/users/add',
+  getParentRoute: () => MainRouteRoute,
+} as any)
+const MainPagesAddRoute = MainPagesAddRouteImport.update({
+  id: '/pages/add',
+  path: '/pages/add',
   getParentRoute: () => MainRouteRoute,
 } as any)
 const MainSettingsCountriesIndexRoute =
@@ -120,7 +132,9 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/analytics': typeof MainAnalyticsLazyRoute
   '/': typeof MainIndexRoute
+  '/pages/add': typeof MainPagesAddRoute
   '/users/add': typeof MainUsersAddRoute
+  '/pages': typeof MainPagesIndexRoute
   '/profile': typeof MainProfileIndexRoute
   '/users': typeof MainUsersIndexRoute
   '/settings/cities/add': typeof MainSettingsCitiesAddRoute
@@ -137,7 +151,9 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/analytics': typeof MainAnalyticsLazyRoute
   '/': typeof MainIndexRoute
+  '/pages/add': typeof MainPagesAddRoute
   '/users/add': typeof MainUsersAddRoute
+  '/pages': typeof MainPagesIndexRoute
   '/profile': typeof MainProfileIndexRoute
   '/users': typeof MainUsersIndexRoute
   '/settings/cities/add': typeof MainSettingsCitiesAddRoute
@@ -156,7 +172,9 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/_main/analytics': typeof MainAnalyticsLazyRoute
   '/_main/': typeof MainIndexRoute
+  '/_main/pages/add': typeof MainPagesAddRoute
   '/_main/users/add': typeof MainUsersAddRoute
+  '/_main/pages/': typeof MainPagesIndexRoute
   '/_main/profile/': typeof MainProfileIndexRoute
   '/_main/users/': typeof MainUsersIndexRoute
   '/_main/settings/cities/add': typeof MainSettingsCitiesAddRoute
@@ -175,7 +193,9 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/analytics'
     | '/'
+    | '/pages/add'
     | '/users/add'
+    | '/pages'
     | '/profile'
     | '/users'
     | '/settings/cities/add'
@@ -192,7 +212,9 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/analytics'
     | '/'
+    | '/pages/add'
     | '/users/add'
+    | '/pages'
     | '/profile'
     | '/users'
     | '/settings/cities/add'
@@ -210,7 +232,9 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/_main/analytics'
     | '/_main/'
+    | '/_main/pages/add'
     | '/_main/users/add'
+    | '/_main/pages/'
     | '/_main/profile/'
     | '/_main/users/'
     | '/_main/settings/cities/add'
@@ -279,11 +303,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainProfileIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
+    '/_main/pages/': {
+      id: '/_main/pages/'
+      path: '/pages'
+      fullPath: '/pages'
+      preLoaderRoute: typeof MainPagesIndexRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
     '/_main/users/add': {
       id: '/_main/users/add'
       path: '/users/add'
       fullPath: '/users/add'
       preLoaderRoute: typeof MainUsersAddRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
+    '/_main/pages/add': {
+      id: '/_main/pages/add'
+      path: '/pages/add'
+      fullPath: '/pages/add'
+      preLoaderRoute: typeof MainPagesAddRouteImport
       parentRoute: typeof MainRouteRoute
     }
     '/_main/settings/countries/': {
@@ -348,7 +386,9 @@ declare module '@tanstack/react-router' {
 interface MainRouteRouteChildren {
   MainAnalyticsLazyRoute: typeof MainAnalyticsLazyRoute
   MainIndexRoute: typeof MainIndexRoute
+  MainPagesAddRoute: typeof MainPagesAddRoute
   MainUsersAddRoute: typeof MainUsersAddRoute
+  MainPagesIndexRoute: typeof MainPagesIndexRoute
   MainProfileIndexRoute: typeof MainProfileIndexRoute
   MainUsersIndexRoute: typeof MainUsersIndexRoute
   MainSettingsCitiesAddRoute: typeof MainSettingsCitiesAddRoute
@@ -364,7 +404,9 @@ interface MainRouteRouteChildren {
 const MainRouteRouteChildren: MainRouteRouteChildren = {
   MainAnalyticsLazyRoute: MainAnalyticsLazyRoute,
   MainIndexRoute: MainIndexRoute,
+  MainPagesAddRoute: MainPagesAddRoute,
   MainUsersAddRoute: MainUsersAddRoute,
+  MainPagesIndexRoute: MainPagesIndexRoute,
   MainProfileIndexRoute: MainProfileIndexRoute,
   MainUsersIndexRoute: MainUsersIndexRoute,
   MainSettingsCitiesAddRoute: MainSettingsCitiesAddRoute,
