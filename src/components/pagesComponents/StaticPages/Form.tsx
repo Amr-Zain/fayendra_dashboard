@@ -10,8 +10,7 @@ import { generateFinalOut, generateInitialValues } from '@/util/helpers'
 import { pagesQueryKeys } from '@/util/queryKeysFactory'
 
 const schema = z.object({
-    image: z.string(),
-  is_active: z.union([z.boolean(), z.number().int().min(0).max(1)]).optional(),
+  image: z.string(),
   type: z.enum(
     [
       'about_us',
@@ -26,10 +25,11 @@ const schema = z.object({
   // EN (Required)
   title_en: z.string().min(1, 'Required'),
   content_en: z.string().min(1, 'Required'),
-
+  
   // AR (Required)
   title_ar: z.string().min(1, 'Required'),
   content_ar: z.string().min(1, 'Required'),
+  //is_active: z.union([z.boolean(), z.number().int().min(0).max(1)]).optional(),
 })
 
 type FormData = z.infer<typeof schema>
@@ -83,11 +83,11 @@ export default function PageForm({ page }: { page?: any }) {
         type: 'editor',
       },
     },
-    {
+   /*  {
       type: 'checkbox',
       name: 'is_active',
       label: 'Active',
-    },
+    }, */
   ]
 
   const { mutate, isPending } = useMutate({
@@ -106,16 +106,8 @@ export default function PageForm({ page }: { page?: any }) {
   })
 
   const handleSubmit = (values: FormData) => {
-    const payload = {
-      ...values,
-      is_active:
-        typeof values.is_active === 'boolean'
-          ? values.is_active
-            ? 1
-            : 0
-          : values.is_active,
-    }
-    mutate(generateFinalOut({}, payload))
+ 
+    mutate(generateFinalOut({}, values))
   }
 
   return (
@@ -124,10 +116,6 @@ export default function PageForm({ page }: { page?: any }) {
       fields={fields}
       defaultValues={{
         ...generateInitialValues(page),
-        is_active:
-          typeof page?.is_active !== 'undefined'
-            ? !!Number(page?.is_active)
-            : true,
       }}
       onSubmit={handleSubmit}
       isLoading={isPending}

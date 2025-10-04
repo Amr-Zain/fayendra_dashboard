@@ -1,4 +1,4 @@
-import { BarChart3, Bell, Book, Calendar, CreditCard, Database, FileText, FolderOpen, HelpCircle, Home, Mail, Search, Settings, ShoppingCart, TrendingUp, Users, Users2 } from "lucide-react";
+import { BarChart3, Bell, Book, Building2, Calendar, CreditCard, Database, FileText, Flag, FolderOpen, HelpCircle, Home, Mail, Search, Settings, ShoppingCart, TrendingUp, Users, Users2 } from "lucide-react";
 
 export const getDashboardMenuItems: MenuItem[] = [
   {
@@ -16,7 +16,7 @@ export const getDashboardMenuItems: MenuItem[] = [
   },
   {
     title: 'menu.pages',
-    url: '/pages',
+    url: '/static-pages',
     icon: Book,
     //badge: 'Pro',
     /*     permission: 'users.index'
@@ -83,12 +83,12 @@ export const getSettingsMenuItems: MenuItem[] = [
   {
     title: 'menu.cities',
     url: '/settings/cities',
-    icon: Settings,
+    icon: Building2,
   },
   {
     title: 'menu.countries',
     url: '/settings/countries',
-    icon: Settings,
+    icon: Flag,
   },
   /*  {
     title: 'menu.billing') || 'Billing',

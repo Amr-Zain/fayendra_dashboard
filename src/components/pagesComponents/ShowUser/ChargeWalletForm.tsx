@@ -8,7 +8,7 @@ import * as z from 'zod'
 import AppForm from '@/components/common/form/AppForm'
 import { FieldProp } from '@/types/components/form'
 import { ApiResponse } from '@/types/api/http'
-import { tranactionsQueryKeys, usersQueryKeys } from '@/util/queryKeysFactory'
+import {  usersQueryKeys } from '@/util/queryKeysFactory'
 import { Transaction } from '@/types/api/user'
 
 
@@ -39,7 +39,7 @@ export default function ChargeWalletForm({ id }: { id: string}) {
     mutationKey: [endpoint],
     endpoint,
     mutationOptions:{
-      meta: { invalidates: [usersQueryKeys.getUser(id), tranactionsQueryKeys.all(id)]}
+      meta: { invalidates: [usersQueryKeys.getUser(id), 'tranactionsQueryKeys.all(id)']}
     },
     onSuccess: (data) => {
       toast.success(data.message || t('toast.success'))

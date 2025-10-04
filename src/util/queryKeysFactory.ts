@@ -45,7 +45,11 @@ export const countriesQueryKeys = {
 }
 
 export const pagesQueryKeys = {
-  all: () => ['countries', 'paginate'],
+  all: () => ['static-pages', 'paginate'],
   getPage: (pageId?: string) => [pagesQueryKeys.all(), 'one', { pageId }],
-  filterd: (search: any) => [...countriesQueryKeys.all(), search] as const,
+  filterd: (search: any) => {
+    const cleaned = Object.fromEntries(
+            Object.entries(search ?? {}).filter(([, v]) => v !== undefined && v !== '')
+            )
+    return [...pagesQueryKeys.all(), cleaned] as const},
 }

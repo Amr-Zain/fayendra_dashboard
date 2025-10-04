@@ -16,14 +16,15 @@ import { Route as MainRouteRouteImport } from './routes/_main/route'
 import { Route as MainIndexRouteImport } from './routes/_main/index'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as MainUsersIndexRouteImport } from './routes/_main/users/index'
+import { Route as MainStaticPagesIndexRouteImport } from './routes/_main/static-pages/index'
 import { Route as MainProfileIndexRouteImport } from './routes/_main/profile/index'
-import { Route as MainPagesIndexRouteImport } from './routes/_main/pages/index'
 import { Route as MainUsersAddRouteImport } from './routes/_main/users/add'
-import { Route as MainPagesAddRouteImport } from './routes/_main/pages/add'
+import { Route as MainStaticPagesAddRouteImport } from './routes/_main/static-pages/add'
 import { Route as MainSettingsCountriesIndexRouteImport } from './routes/_main/settings/countries/index'
 import { Route as MainSettingsCitiesIndexRouteImport } from './routes/_main/settings/cities/index'
 import { Route as MainUsersShowIdRouteImport } from './routes/_main/users/show/$id'
 import { Route as MainUsersEditIdRouteImport } from './routes/_main/users/edit/$id'
+import { Route as MainStaticPagesEditIdRouteImport } from './routes/_main/static-pages/edit/$id'
 import { Route as MainSettingsCountriesAddRouteImport } from './routes/_main/settings/countries/add'
 import { Route as MainSettingsCitiesAddRouteImport } from './routes/_main/settings/cities/add'
 import { Route as MainSettingsCountriesEditIdRouteImport } from './routes/_main/settings/countries/edit/$id'
@@ -62,14 +63,14 @@ const MainUsersIndexRoute = MainUsersIndexRouteImport.update({
   path: '/users/',
   getParentRoute: () => MainRouteRoute,
 } as any)
+const MainStaticPagesIndexRoute = MainStaticPagesIndexRouteImport.update({
+  id: '/static-pages/',
+  path: '/static-pages/',
+  getParentRoute: () => MainRouteRoute,
+} as any)
 const MainProfileIndexRoute = MainProfileIndexRouteImport.update({
   id: '/profile/',
   path: '/profile/',
-  getParentRoute: () => MainRouteRoute,
-} as any)
-const MainPagesIndexRoute = MainPagesIndexRouteImport.update({
-  id: '/pages/',
-  path: '/pages/',
   getParentRoute: () => MainRouteRoute,
 } as any)
 const MainUsersAddRoute = MainUsersAddRouteImport.update({
@@ -77,9 +78,9 @@ const MainUsersAddRoute = MainUsersAddRouteImport.update({
   path: '/users/add',
   getParentRoute: () => MainRouteRoute,
 } as any)
-const MainPagesAddRoute = MainPagesAddRouteImport.update({
-  id: '/pages/add',
-  path: '/pages/add',
+const MainStaticPagesAddRoute = MainStaticPagesAddRouteImport.update({
+  id: '/static-pages/add',
+  path: '/static-pages/add',
   getParentRoute: () => MainRouteRoute,
 } as any)
 const MainSettingsCountriesIndexRoute =
@@ -101,6 +102,11 @@ const MainUsersShowIdRoute = MainUsersShowIdRouteImport.update({
 const MainUsersEditIdRoute = MainUsersEditIdRouteImport.update({
   id: '/users/edit/$id',
   path: '/users/edit/$id',
+  getParentRoute: () => MainRouteRoute,
+} as any)
+const MainStaticPagesEditIdRoute = MainStaticPagesEditIdRouteImport.update({
+  id: '/static-pages/edit/$id',
+  path: '/static-pages/edit/$id',
   getParentRoute: () => MainRouteRoute,
 } as any)
 const MainSettingsCountriesAddRoute =
@@ -132,13 +138,14 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/analytics': typeof MainAnalyticsLazyRoute
   '/': typeof MainIndexRoute
-  '/pages/add': typeof MainPagesAddRoute
+  '/static-pages/add': typeof MainStaticPagesAddRoute
   '/users/add': typeof MainUsersAddRoute
-  '/pages': typeof MainPagesIndexRoute
   '/profile': typeof MainProfileIndexRoute
+  '/static-pages': typeof MainStaticPagesIndexRoute
   '/users': typeof MainUsersIndexRoute
   '/settings/cities/add': typeof MainSettingsCitiesAddRoute
   '/settings/countries/add': typeof MainSettingsCountriesAddRoute
+  '/static-pages/edit/$id': typeof MainStaticPagesEditIdRoute
   '/users/edit/$id': typeof MainUsersEditIdRoute
   '/users/show/$id': typeof MainUsersShowIdRoute
   '/settings/cities': typeof MainSettingsCitiesIndexRoute
@@ -151,13 +158,14 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/analytics': typeof MainAnalyticsLazyRoute
   '/': typeof MainIndexRoute
-  '/pages/add': typeof MainPagesAddRoute
+  '/static-pages/add': typeof MainStaticPagesAddRoute
   '/users/add': typeof MainUsersAddRoute
-  '/pages': typeof MainPagesIndexRoute
   '/profile': typeof MainProfileIndexRoute
+  '/static-pages': typeof MainStaticPagesIndexRoute
   '/users': typeof MainUsersIndexRoute
   '/settings/cities/add': typeof MainSettingsCitiesAddRoute
   '/settings/countries/add': typeof MainSettingsCountriesAddRoute
+  '/static-pages/edit/$id': typeof MainStaticPagesEditIdRoute
   '/users/edit/$id': typeof MainUsersEditIdRoute
   '/users/show/$id': typeof MainUsersShowIdRoute
   '/settings/cities': typeof MainSettingsCitiesIndexRoute
@@ -172,13 +180,14 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/_main/analytics': typeof MainAnalyticsLazyRoute
   '/_main/': typeof MainIndexRoute
-  '/_main/pages/add': typeof MainPagesAddRoute
+  '/_main/static-pages/add': typeof MainStaticPagesAddRoute
   '/_main/users/add': typeof MainUsersAddRoute
-  '/_main/pages/': typeof MainPagesIndexRoute
   '/_main/profile/': typeof MainProfileIndexRoute
+  '/_main/static-pages/': typeof MainStaticPagesIndexRoute
   '/_main/users/': typeof MainUsersIndexRoute
   '/_main/settings/cities/add': typeof MainSettingsCitiesAddRoute
   '/_main/settings/countries/add': typeof MainSettingsCountriesAddRoute
+  '/_main/static-pages/edit/$id': typeof MainStaticPagesEditIdRoute
   '/_main/users/edit/$id': typeof MainUsersEditIdRoute
   '/_main/users/show/$id': typeof MainUsersShowIdRoute
   '/_main/settings/cities/': typeof MainSettingsCitiesIndexRoute
@@ -193,13 +202,14 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/analytics'
     | '/'
-    | '/pages/add'
+    | '/static-pages/add'
     | '/users/add'
-    | '/pages'
     | '/profile'
+    | '/static-pages'
     | '/users'
     | '/settings/cities/add'
     | '/settings/countries/add'
+    | '/static-pages/edit/$id'
     | '/users/edit/$id'
     | '/users/show/$id'
     | '/settings/cities'
@@ -212,13 +222,14 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/analytics'
     | '/'
-    | '/pages/add'
+    | '/static-pages/add'
     | '/users/add'
-    | '/pages'
     | '/profile'
+    | '/static-pages'
     | '/users'
     | '/settings/cities/add'
     | '/settings/countries/add'
+    | '/static-pages/edit/$id'
     | '/users/edit/$id'
     | '/users/show/$id'
     | '/settings/cities'
@@ -232,13 +243,14 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/_main/analytics'
     | '/_main/'
-    | '/_main/pages/add'
+    | '/_main/static-pages/add'
     | '/_main/users/add'
-    | '/_main/pages/'
     | '/_main/profile/'
+    | '/_main/static-pages/'
     | '/_main/users/'
     | '/_main/settings/cities/add'
     | '/_main/settings/countries/add'
+    | '/_main/static-pages/edit/$id'
     | '/_main/users/edit/$id'
     | '/_main/users/show/$id'
     | '/_main/settings/cities/'
@@ -296,18 +308,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainUsersIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
+    '/_main/static-pages/': {
+      id: '/_main/static-pages/'
+      path: '/static-pages'
+      fullPath: '/static-pages'
+      preLoaderRoute: typeof MainStaticPagesIndexRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
     '/_main/profile/': {
       id: '/_main/profile/'
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof MainProfileIndexRouteImport
-      parentRoute: typeof MainRouteRoute
-    }
-    '/_main/pages/': {
-      id: '/_main/pages/'
-      path: '/pages'
-      fullPath: '/pages'
-      preLoaderRoute: typeof MainPagesIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
     '/_main/users/add': {
@@ -317,11 +329,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainUsersAddRouteImport
       parentRoute: typeof MainRouteRoute
     }
-    '/_main/pages/add': {
-      id: '/_main/pages/add'
-      path: '/pages/add'
-      fullPath: '/pages/add'
-      preLoaderRoute: typeof MainPagesAddRouteImport
+    '/_main/static-pages/add': {
+      id: '/_main/static-pages/add'
+      path: '/static-pages/add'
+      fullPath: '/static-pages/add'
+      preLoaderRoute: typeof MainStaticPagesAddRouteImport
       parentRoute: typeof MainRouteRoute
     }
     '/_main/settings/countries/': {
@@ -350,6 +362,13 @@ declare module '@tanstack/react-router' {
       path: '/users/edit/$id'
       fullPath: '/users/edit/$id'
       preLoaderRoute: typeof MainUsersEditIdRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
+    '/_main/static-pages/edit/$id': {
+      id: '/_main/static-pages/edit/$id'
+      path: '/static-pages/edit/$id'
+      fullPath: '/static-pages/edit/$id'
+      preLoaderRoute: typeof MainStaticPagesEditIdRouteImport
       parentRoute: typeof MainRouteRoute
     }
     '/_main/settings/countries/add': {
@@ -386,13 +405,14 @@ declare module '@tanstack/react-router' {
 interface MainRouteRouteChildren {
   MainAnalyticsLazyRoute: typeof MainAnalyticsLazyRoute
   MainIndexRoute: typeof MainIndexRoute
-  MainPagesAddRoute: typeof MainPagesAddRoute
+  MainStaticPagesAddRoute: typeof MainStaticPagesAddRoute
   MainUsersAddRoute: typeof MainUsersAddRoute
-  MainPagesIndexRoute: typeof MainPagesIndexRoute
   MainProfileIndexRoute: typeof MainProfileIndexRoute
+  MainStaticPagesIndexRoute: typeof MainStaticPagesIndexRoute
   MainUsersIndexRoute: typeof MainUsersIndexRoute
   MainSettingsCitiesAddRoute: typeof MainSettingsCitiesAddRoute
   MainSettingsCountriesAddRoute: typeof MainSettingsCountriesAddRoute
+  MainStaticPagesEditIdRoute: typeof MainStaticPagesEditIdRoute
   MainUsersEditIdRoute: typeof MainUsersEditIdRoute
   MainUsersShowIdRoute: typeof MainUsersShowIdRoute
   MainSettingsCitiesIndexRoute: typeof MainSettingsCitiesIndexRoute
@@ -404,13 +424,14 @@ interface MainRouteRouteChildren {
 const MainRouteRouteChildren: MainRouteRouteChildren = {
   MainAnalyticsLazyRoute: MainAnalyticsLazyRoute,
   MainIndexRoute: MainIndexRoute,
-  MainPagesAddRoute: MainPagesAddRoute,
+  MainStaticPagesAddRoute: MainStaticPagesAddRoute,
   MainUsersAddRoute: MainUsersAddRoute,
-  MainPagesIndexRoute: MainPagesIndexRoute,
   MainProfileIndexRoute: MainProfileIndexRoute,
+  MainStaticPagesIndexRoute: MainStaticPagesIndexRoute,
   MainUsersIndexRoute: MainUsersIndexRoute,
   MainSettingsCitiesAddRoute: MainSettingsCitiesAddRoute,
   MainSettingsCountriesAddRoute: MainSettingsCountriesAddRoute,
+  MainStaticPagesEditIdRoute: MainStaticPagesEditIdRoute,
   MainUsersEditIdRoute: MainUsersEditIdRoute,
   MainUsersShowIdRoute: MainUsersShowIdRoute,
   MainSettingsCitiesIndexRoute: MainSettingsCitiesIndexRoute,

@@ -5,6 +5,7 @@ import { Switch } from '@/components/ui/switch'
 import { Dispatch, SetStateAction } from 'react'
 import { hasPermission } from '@/util/helpers'
 import { countriesQueryKeys } from '@/util/queryKeysFactory'
+import { createdAtColumn, imageColumn, statusColumn, textColumn } from '@/components/features/sharedColumns'
 
 export type Country = {
   id: number
@@ -29,174 +30,51 @@ export type Country = {
   created_at: string
 }
 
+
+
 const columnHelper = createColumnHelper<Country>()
 
 export const countryColumns = (
-  setModal: Dispatch<
-    SetStateAction<{
-      type: 'active' | 'delete'
-      show: boolean
-      id: string
-    }>
-  >,
-) => [
-  columnHelper.accessor('name', {
-    header: ({ column }) => (
-      <ColumnHeader column={column} title="Country Name" />
-    ),
-    cell: ({ getValue }) => <div className="font-medium">{getValue()}</div>,
-    enableSorting: false,
+  open: (type: 'active' | 'delete', row: Country) => void,
+): ColumnDef<Country>[] => [
+  imageColumn<Country>('flag',"Flag"),
+  textColumn<Country>('name', 'Country Name', { sortable: false }),
+  textColumn<Country>('short_name', 'Code'),
+  textColumn<Country>('phone_code', 'Phone Code', {
+    render: ({ getValue }) => <div className="text-muted-foreground">+{getValue()}</div>,
   }),
-  columnHelper.accessor('short_name', {
-    header: ({ column }) => <ColumnHeader column={column} title="Code" />,
-    cell: ({ getValue }) => (
-      <div className="text-muted-foreground">{getValue()}</div>
+  textColumn<Country>('phone_length', 'Phone Length'),
+  textColumn<Country>('currency', 'Currency'),
+  textColumn<Country>('nationality', 'Nationality'),
+  textColumn<Country>('continent', 'Continent', {
+    render: ({ getValue }) => (
+      <div className="text-muted-foreground capitalize">{String(getValue() ?? '')}</div>
     ),
-    enableSorting: false,
   }),
-  columnHelper.accessor('phone_code', {
-    header: ({ column }) => <ColumnHeader column={column} title="Phone Code" />,
-    cell: ({ getValue }) => (
-      <div className="text-muted-foreground">+{getValue()}</div>
-    ),
-    enableSorting: false,
-  }),
-  columnHelper.accessor('phone_length', {
-    header: ({ column }) => (
-      <ColumnHeader column={column} title="Phone Length" />
-    ),
-    cell: ({ getValue }) => (
-      <div className="text-muted-foreground">{getValue()}</div>
-    ),
-    enableSorting: false,
-  }),
-  columnHelper.accessor('currency', {
-    header: ({ column }) => <ColumnHeader column={column} title="Currency" />,
-    cell: ({ getValue }) => (
-      <div className="text-muted-foreground">{getValue()}</div>
-    ),
-    enableSorting: false,
-  }),
-  columnHelper.accessor('nationality', {
-    header: ({ column }) => (
-      <ColumnHeader column={column} title="Nationality" />
-    ),
-    cell: ({ getValue }) => (
-      <div className="text-muted-foreground">{getValue()}</div>
-    ),
-    enableSorting: false,
-  }),
-  columnHelper.accessor('continent', {
-    header: ({ column }) => <ColumnHeader column={column} title="Continent" />,
-    cell: ({ getValue }) => (
-      <div className="text-muted-foreground capitalize">{getValue()}</div>
-    ),
-    enableSorting: false,
-  }),
-  columnHelper.accessor('is_active', {
-    header: ({ column }) => <ColumnHeader column={column} title="Status" />,
-    cell: ({ row, getValue }) => {
-      const isActive = getValue()
-      return (
-        <div className="flex items-center justify-center">
-          <div
-            onClick={() =>
-              setModal({
-                show: true,
-                type: 'active',
-                id: row.original.id.toString(),
-              })
-            }
-            className="cursor-pointer p-1 rounded hover:bg-muted transition-colors"
-            title={
-              isActive ? 'Click to deactivate city' : 'Click to activate city'
-            }
-          >
-            <Switch checked={isActive} dir="ltr" />
-          </div>
-          <div className="ml-2">
-            <span
-              className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                isActive
-                  ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
-                  : 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
-              }`}
-            >
-              {isActive ? 'Active' : 'Inactive'}
-            </span>
-          </div>
-        </div>
-      )
-    },
-    enableSorting: false,
-  }),
-  columnHelper.accessor('created_at', {
-    header: ({ column }) => <ColumnHeader column={column} title="Created At" />,
-    cell: ({ getValue }) => {
-      const date = new Date(getValue())
-      const now = new Date()
-      const diffTime = Math.abs(now.getTime() - date.getTime())
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-      return (
-        <div className="text-sm space-y-1">
-          <div>{date.toLocaleDateString()}</div>
-          <div className="text-xs text-muted-foreground">
-            {diffDays === 1 ? '1 day ago' : `${diffDays} days ago`}
-          </div>
-        </div>
-      )
-    },
-    enableSorting: true,
-    sortingFn: 'datetime',
-  }),
-]as ColumnDef<Country>[]
-
-export const countryFilters: Filter[] = [
-  {
-    id: 'is_active',
-    title: 'Status',
-    options: [
-      { label: 'Active', value: '1' },
-      { label: 'Inactive', value: '0' },
-    ],
-    multiple: false,
-  },
-  {
-    id: 'sort',
-    title: 'Sort',
-    options: [
-      { label: 'ASC', value: 'asc' },
-      { label: 'DESC', value: 'desc' },
-    ],
-    multiple: false,
-  },
+  statusColumn<Country>(open),          
+  createdAtColumn<Country>('Created'),  
 ]
 
-export const actions =(
-  setModal: Dispatch<
-    SetStateAction<{
-      type: 'active'  | 'delete'
-      show: boolean
-      id: string
-    }>
-  >,
+export const countryFilters: Filter[] = [
+  { id: 'is_active', title: 'Status', options: [
+      { label: 'Active', value: '1' },
+      { label: 'Inactive', value: '0' },
+    ], multiple: false },
+  { id: 'sort', title: 'Sort', options: [
+      { label: 'ASC', value: 'asc' },
+      { label: 'DESC', value: 'desc' },
+    ], multiple: false },
+]
+
+export const actions = (
+  open: (type: 'active' | 'delete', row: Country) => void,
 ) => [
   {
     label: 'Edit',
     to: '/settings/countries/edit/$id',
     params: (row: Country) => ({ id: row.id.toString() }),
-    //disabled: hasPermission('cities.edit'),
-    queryKey: (id:string)=>countriesQueryKeys.getCountry(id)
+    queryKey: (id: string) => countriesQueryKeys.getCountry(id),
   },
-  {
-    label: 'Delete',
-    danger: true,
-     onClick: (row: Country) =>
-      setModal({ show: true, type: 'delete', id: row.id.toString() }),
-  },
-  {
-    label: 'Activate/Deactivate city',
-     onClick: (row: Country) =>
-      setModal({ show: true, type: 'active', id: row.id.toString() }),
-  },
+  { label: 'Delete', danger: true, onClick: (row: Country) => open('delete', row) },
+  { label: 'Activate/Deactivate country', onClick: (row: Country) => open('active', row) },
 ]

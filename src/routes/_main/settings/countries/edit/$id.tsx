@@ -1,3 +1,4 @@
+import MainPageWrapper, { breadcrumbItem } from '@/components/layout/MainPageWrapper'
 import CountryForm, {
   Country,
 } from '@/components/pagesComponents/Settings/countries/Form'
@@ -6,6 +7,8 @@ import { RouterContext } from '@/main'
 import { ApiResponse } from '@/types/api/http'
 import { prefetchWithUseFetchConfig } from '@/util/preFetcher'
 import { createFileRoute } from '@tanstack/react-router'
+import { Edit, Flag, Home } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const countryQueryKey = (id?: string) => ['country', id] as const
 
@@ -23,11 +26,25 @@ export const Route = createFileRoute('/_main/settings/countries/edit/$id')({
 
 function RouteComponent() {
   const { id } = Route.useParams()
-  const { data } = useFetch<ApiResponse<Country>>({
+  const { data } = useFetch<ApiResponse<Country>,Country>({
     queryKey: countryQueryKey(id),
     endpoint: `countries/${id}`,
     suspense: true,
     select: (res) => res.data as unknown as Country,
   })
-  return <CountryForm country={data!} />
+
+   const { t } = useTranslation()
+     const breadcrumbItems: breadcrumbItem[] = [
+    { label: t('pages.home'), icon: <Home />, to: '/' },
+    { label: t('pages.countries'), icon: <Flag />, to: '/settings/countries' },
+    {label: t('buttons.Edit'), icon: <Edit />}
+
+  ]
+
+  return (
+    <MainPageWrapper breadcrumbItems={breadcrumbItems}>
+      <CountryForm country={data!} />
+    </MainPageWrapper>
+  )
+  return 
 }

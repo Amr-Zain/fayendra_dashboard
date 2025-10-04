@@ -9,6 +9,8 @@ import { TooltipProvider } from '@/components/ui/tooltip'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/authStore'
+import ConfirmModal from '@/components/common/uiComponents/ConfirmModal'
+import { useAlertModal } from '@/stores/useAlertModal'
 
 export const Route = createFileRoute('/_main')({
   beforeLoad:({location})=>{
@@ -30,7 +32,15 @@ export const Route = createFileRoute('/_main')({
 
 function LayoutContent() {
   const { state } = useSidebar()
-
+  const {
+    isOpen,
+    title,
+    desc,
+    variant,
+    pending,
+    setIsOpen,
+    handleConfirm,
+  } = useAlertModal(); 
   return (
     <div
       className={cn(
@@ -47,6 +57,16 @@ function LayoutContent() {
           <Outlet />
         </div>
       </main>
+      
+     <ConfirmModal
+      title={title!}
+      desc={desc!}
+      open={isOpen}
+      setOpen={setIsOpen}
+      onClick={handleConfirm!}
+      Pending={!!pending}
+      variant={variant}
+    />
     </div>
   )
 }

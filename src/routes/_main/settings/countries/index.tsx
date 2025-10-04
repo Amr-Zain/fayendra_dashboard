@@ -5,6 +5,9 @@ import { ApiResponse } from '@/types/api/http'
 import { createFileRoute } from '@tanstack/react-router'
 import { prefetchWithUseFetchConfig } from '@/util/preFetcher'
 import { countriesQueryKeys } from '@/util/queryKeysFactory'
+import MainPageWrapper, { breadcrumbItem } from '@/components/layout/MainPageWrapper'
+import { Flag, Home } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 
 export type Country = {
@@ -60,7 +63,7 @@ export const Route = createFileRoute('/_main/settings/countries/')({
 
 function RouteComponent() {
   const search = Route.useSearch()
-
+  const { t } = useTranslation()
   const { data } = useFetch<ApiResponse<Country[], 'countries'>>({
     queryKey: countriesQueryKeys.filterd(search),
     endpoint,
@@ -73,6 +76,14 @@ function RouteComponent() {
       sort: {  },
     },
   })
+ const breadcrumbItems: breadcrumbItem[] = [
+    { label: t('pages.home'), icon: <Home />, to: '/' },
+    { label: t('pages.countries'), icon: <Flag /> },
+  ]
 
-  return <Countries data={data!} />
+  return (
+    <MainPageWrapper breadcrumbItems={breadcrumbItems}>
+      <Countries data={data!} />
+    </MainPageWrapper>
+  )
 }

@@ -1,3 +1,4 @@
+import MainPageWrapper, { breadcrumbItem } from '@/components/layout/MainPageWrapper'
 import CityForm from '@/components/pagesComponents/Settings/cities/CityFrom'
 import useFetch from '@/hooks/UseFetch'
 import { RouterContext } from '@/main'
@@ -6,6 +7,8 @@ import { ApiResponse } from '@/types/api/http'
 import { prefetchWithUseFetchConfig } from '@/util/preFetcher'
 import { citiesQueryKeys } from '@/util/queryKeysFactory'
 import { createFileRoute } from '@tanstack/react-router'
+import { Building2, Edit, Home } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/_main/settings/cities/edit/$id')({
   component: RouteComponent,
@@ -28,5 +31,16 @@ function RouteComponent() {
     suspense: true,
     select: (data) => data.data as unknown as City,
   })
-  return <CityForm city={data} />
+   const { t } = useTranslation()
+  const breadcrumbItems: breadcrumbItem[] = [
+    { label: t('pages.home'), icon: <Home />, to: '/' },
+    { label: t('pages.cities'), icon: <Building2 />, to: '/settings/cities' },
+    { label: t('buttons.add'), icon: <Edit /> },
+  ]
+
+  return (
+    <MainPageWrapper breadcrumbItems={breadcrumbItems}>
+      <CityForm city={data} />
+    </MainPageWrapper>
+  )
 }

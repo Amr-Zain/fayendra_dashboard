@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { cn } from '@/lib/utils'
 
 export function ColumnHeader<TData, TValue>({
   column,
@@ -19,7 +20,7 @@ export function ColumnHeader<TData, TValue>({
   className?: string
 }) {
   if (!column.getCanSort()) {
-    return <div className={className}>{title}</div>
+    return <div className={cn('text-foreground whitespace-nowrap font-normal text-sm',className)}>{title}</div>
   }
 
   return (
@@ -29,7 +30,7 @@ export function ColumnHeader<TData, TValue>({
           <Button
             variant="ghost"
             size="sm"
-            className="-ms-3 h-8 data-[state=open]:bg-accent"
+            className="-ms-3 h-8 data-[state=open]:bg-accent text-foreground"
           >
             <span>{title}</span>
             {column.getIsSorted() === 'desc' ? (

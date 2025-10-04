@@ -1,10 +1,9 @@
-
 import { Users, DollarSign, Activity, TrendingUp } from 'lucide-react'
-import { StatsCard } from '@/components/charts/StatsCard'
+import { StatsCard } from '@/components/common/charts/StatsCard'
 import dashboardHero from '@/assets/dashboard-hero.jpg'
 import { useTranslation } from 'react-i18next'
-import { AnalyticsBarChart } from '@/components/charts/BarChart'
-import { AnalyticsLineChart } from '@/components/charts/LinerChart'
+import { AnalyticsBarChart } from '@/components/common/charts/BarChart'
+import { AnalyticsLineChart } from '@/components/common/charts/LinerChart'
 
 const userActivityData = [
   { day: 'Mon', users: 1200 },

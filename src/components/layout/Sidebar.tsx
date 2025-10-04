@@ -4,8 +4,6 @@ import {
   User2,
   Bell,
   LogOut,
-  PieChart,
-  ChevronsRight,
 } from 'lucide-react'
 
 import {
@@ -87,21 +85,21 @@ export function AppSidebar() {
                     : 'flex gap-2',
                 )}
               >
-                <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center shrink-0 shadow-glow">
+                <div className="size-8 rounded-md bg-gradient-primary flex items-center justify-center shrink-0 shadow-glow">
                   <Logo className="w-5 h-5 text-white" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <h2 className="font-semibold text-sidebar-foreground truncate">
+                  <h2 className="font-semibold truncate">
                     {t('dashboard')}
                   </h2>
-                  <p className="text-xs text-sidebar-foreground/70 truncate">
+                  <p className="text-xs  truncate">
                     {t('adminPanel')}
                   </p>
                 </div>
               </div>
               <SidebarTrigger
                 className={cn(
-                  'p-2 w-7 h-7 rounded-full transition-colors cursor-w-resize',
+                  'p-2 size-8 rounded-md transition-colors cursor-w-resize',
                   state === 'expanded' ? 'flex' : 'hidden group-hover:flex',
                 )}
               />
