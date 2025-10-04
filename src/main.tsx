@@ -21,6 +21,7 @@ import NetworkWrapper from './components/common/uiComponents/NetworkWrapper'
 import reportWebVitals from './reportWebVitals'
 import { queryClient } from './components/providers/tabstackQueryProvider'
 import { ThemeProvider } from './components/providers/themeProvider'
+import i18n from './i18n'
 
 export type RouterContext = {
   queryClient: QueryClient
@@ -42,6 +43,9 @@ declare module '@tanstack/react-router' {
     context: RouterContext
   }
 }
+const lang = i18n.language || localStorage.getItem('i18nextLng');
+document.documentElement.lang = lang!;
+document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 
 ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   <React.StrictMode>
