@@ -1,5 +1,4 @@
 import { useAuthStore } from "@/stores/authStore";
-import { logOut } from "@/util/helpers";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -10,19 +9,11 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const locale = Cookies.get("NEXT_LOCALE") || "en";
-    const guestToken = Cookies.get("guest_token");
-    const userToken = Cookies.get("user_token") || useAuthStore.getState().token;
-    const location : any = Cookies.get("client_location");
+    const userToken = useAuthStore.getState().token;
 
     if (!config.params) {
       config.params = {};
     }
-
-    if (!userToken && guestToken) {
-      config.params["guest_token"] = guestToken;
-    }
-
-    // Check if request is server-side or client-side
 
     if(userToken){
       config.headers["Authorization"] = `Bearer ${userToken}`;
@@ -40,7 +31,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      logOut()
+      useAuthStore.getState().clearUser();
       if (typeof window !== "undefined") {
         window.location.href = "/login";
       }

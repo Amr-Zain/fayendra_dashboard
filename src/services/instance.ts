@@ -1,8 +1,7 @@
 
 import i18n from '@/i18n';
 import { useAuthStore } from '@/stores/authStore';
-import { logOut } from '@/util/helpers';
-import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 
 interface ApiResponse<T = any> {
@@ -22,7 +21,7 @@ const axiosInstance: AxiosInstance = axios.create({
 
 // Add a request interceptor
 axiosInstance.interceptors.request.use((config: any) => {
-  const user_token = Cookies.get('user_token') ||useAuthStore.getState().token;
+  const user_token = useAuthStore.getState().token;
 
   if(user_token){
     config.headers["Authorization"] = `Bearer ${user_token}`;
@@ -49,8 +48,8 @@ axiosInstance.interceptors.response.use(
         break;
       case 401:
         console.error('Unauthorized:', status);
-        logOut();
-        //window.location.replace('/auth/login');
+        useAuthStore.getState().clearUser()        
+        window.location.replace('/auth/login');
         break;
       case 404:
         console.error('Not Found:', status);

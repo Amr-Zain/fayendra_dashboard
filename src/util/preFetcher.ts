@@ -1,9 +1,9 @@
 import axiosInstance from "@/services/instance";
 import { QueryClient, QueryKey } from "@tanstack/react-query";
 import axios from "axios";
-import { logOut } from "./helpers";
 import { redirect } from "@tanstack/react-router";
 import i18n from '@/i18n';
+import { useAuthStore } from "@/stores/authStore";
 
 export async function prefetchWithUseFetchConfig(
     queryClient: QueryClient,
@@ -37,7 +37,7 @@ export async function prefetchWithUseFetchConfig(
                 return res.data;
             } catch (error) {
                 if (axios.isAxiosError(error) && error.response?.status === 401) {
-                    logOut();
+                    useAuthStore.getState().clearUser();
                     throw redirect({ to: "/auth/login" });
                 }
                 throw error;

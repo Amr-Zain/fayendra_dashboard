@@ -64,12 +64,6 @@ export const formatPhoneNumber = (phonecode: string, phone: string): string => {
 export const isArabic = (value: any) => /^[\u0600-\u06FF\s\d!@#$%^&*()_+=[\]{}|\\;:'",.<>?/-]+$/.test(value);
 export const isEnglish = (value: any) => /^[A-Za-z\s\d!@#$%^&*()_+=[\]{}|\\;:'",.<>?/-]+$/.test(value);
 
-export const logOut = () => {
-    Cookies.remove('user_data');
-    Cookies.remove('user');
-    Cookies.remove('user_token');
-    Cookies.remove('permissions');
-};
 
 export function generateInitialValues(data: any) {
     const initialValues: Record<string, any> = {};
