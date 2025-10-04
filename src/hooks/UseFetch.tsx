@@ -7,10 +7,10 @@ import {
 } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import axiosInstance from '@/services/instance'
-import { logOut } from '@/util/helpers'
 import { useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import i18n from '@/i18n'
+import { useAuthStore } from '@/stores/authStore'
 
 type AnyObj = Record<string, any>
 
@@ -79,7 +79,7 @@ const isRTL = i18n.language.startsWith('ar')
       }
 
       if (err?.response?.status === 401) {
-        logOut()
+        useAuthStore.getState().clearUser();
         router({ to: '/auth/login' })
       }
       throw err

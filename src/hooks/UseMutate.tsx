@@ -16,6 +16,8 @@ import {
   type NormalizedHttpError,
   toNormalizedHttpError,
 } from '@/types/api/http'
+import { useAuthStore } from '@/stores/authStore'
+import { Router } from 'lucide-react'
 
 type UseMutateProps_TP<Response_T, Request_T = unknown> = {
   endpoint: string
@@ -102,6 +104,10 @@ export function useMutate<Response_T = unknown, Request_T = unknown>({
       const normalized = toNormalizedHttpError(err)
       originalOnError?.(err as unknown as ApiAxiosError, normalized)
       mutationOptions?.onError?.(err, undefined as any, undefined as any)
+      if (normalized?.status === 401) {
+          useAuthStore.getState().clearUser();
+          Router({ to: '/auth/login' });
+        }
     },
     onMutate,
   })
