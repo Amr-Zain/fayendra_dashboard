@@ -11,10 +11,10 @@ import { LogIn } from 'lucide-react'
 import AppForm from '../../common/form/AppForm'
 import { FieldProp } from '@/types/components/form'
 import { useMutate } from '@/hooks/UseMutate'
-import { useAuthStore, User } from '@/stores/authStore'
+import { useAuthStore, UserAuth } from '@/stores/authStore'
 import { toast } from 'sonner'
 import { useNavigate } from '@tanstack/react-router'
-import { ApiResponse } from '@/types/api/http'
+import { ApiResponseBase } from '@/types/api/http'
 import { Logo } from '@/components/common/Icons'
 
 const loginSchema = z.object({
@@ -27,7 +27,7 @@ type LoginFormValues = z.infer<typeof loginSchema>
 export function LoginForm() {
   const setUser = useAuthStore((state) => state.setUser)
   const navigate = useNavigate()
-  const { mutate, isPending } = useMutate<ApiResponse<User>>({
+  const { mutate, isPending } = useMutate<ApiResponseBase<UserAuth>>({
     endpoint: 'auth/login',
     mutationKey: ['login'],
     onSuccess: (data) => {

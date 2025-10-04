@@ -1,7 +1,7 @@
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Bell, Menu, Search, User } from 'lucide-react'
+import { Bell, LogOut, Menu, Search, User } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { LanguageToggle } from '@/components/ui/language-toggle'
 import { useTranslation } from 'react-i18next'
@@ -37,18 +37,17 @@ export function DashboardHeader() {
 
   const navigate = useNavigate()
   const initials = useMemo(() => {
-    const name = user?.full_name?.trim()
+    const name = user?.name?.trim()
     if (!name) return 'A'
     return name
       .split(/\s+/)
       .map((n) => n[0])
       .join('')
       .toUpperCase()
-  }, [user?.full_name])
+  }, [user?.name])
 
-  // Logout mutation (adjust endpoint/method if needed)
   const { mutateAsync: logoutAsync, isPending: isLoggingOut } = useMutate<ApiResponse>({
-    endpoint: 'logout',
+    endpoint: 'auth/logout',
     mutationKey: ['logout'],
     method: 'post',
     onSuccess:(data)=>{
@@ -116,18 +115,18 @@ export function DashboardHeader() {
                 aria-label={t('profile')}
               >
                 <Avatar className="h-8 w-8">
+                  <AvatarImage src={user?.image ?? ''} alt={user?.name ?? 'Profile'} />
                   <AvatarFallback className="bg-gradient-primary text-white">
                     {initials}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-
             <DropdownMenuContent className="w-56" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col gap-1">
                   <p className="text-sm font-medium leading-none">
-                    {user?.full_name}
+                    {user?.name}
                   </p>
                   <p className="text-xs leading-none text-muted-foreground">
                     {user?.email}
@@ -148,11 +147,11 @@ export function DashboardHeader() {
                   setConfirmOpen(true)
                 }}
               >
+                <LogOut className="me-2 h-4 w-4" />
                 {t('signOut')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
           <ConfirmModal
             title={t('confirmSignOutTitle') || 'Sign out?'}
             desc={

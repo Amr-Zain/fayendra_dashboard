@@ -6,7 +6,7 @@ import { useAuthStore } from '@/stores/authStore'
 
 export default function ProfileCard() {
   const { t } = useTranslation()
-  const { full_name, email, image, phone_complete_form } = useAuthStore(
+  const { name: full_name, email, image, phone } = useAuthStore(
     (state) => state.user!
   )
 
@@ -23,7 +23,7 @@ export default function ProfileCard() {
   const personalInfo = [
     { label: t('labels.full_name'), value: full_name },
     { label: t('labels.email'), value: email },
-    { label: t('labels.phone'), value: phone_complete_form },
+    { label: t('labels.phone'), value: phone },
   ]
 
   return (

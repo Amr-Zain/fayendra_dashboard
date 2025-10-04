@@ -4,53 +4,68 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import Cookies from "js-cookie";
 
-export interface User {
-  token: string
-  full_name: string
+export interface UserLocation {
+  lat: number
+  lng: number
+}
+
+export interface UserSettings {
+  language: 'ar'|'en'
+  allow_notifications: boolean
+}
+
+export interface UserAuth {
+  id: number
+  name: string
   email: string
-  image: string
-  phone_complete_form: string
-  permission: { url: string; back_route_name: string }[]
-  [key: string]: any
+  phone_code: string
+  phone: string
+  image: string | null
+  user_type: 'super_admin' | 'admin' | 'user' | string
+  is_active: boolean
+  is_verified: boolean
+  is_banned: boolean
+  is_suspended: boolean
+  settings: UserSettings
+  location: UserLocation
+  token: string
+  verification_token: string | null
 }
 
 interface AuthStore {
-  user: User | null;
+  user: UserAuth | null;
   token: string | null;
-  setUser: (user: User) => void;
+  setUser: (user: UserAuth) => void;
+  updateUser: (user:any) => void;
   clearUser: () => void;
 }
 
-const createCookieStorage = () => {
-  return {
-    getItem: (name: string): string | null => {
-      try {
-        return Cookies.get(name) || null;
-      } catch (error) {
-        console.error("Error getting cookie:", error);
-        return null;
-      }
-    },
-    setItem: (name: string, value: string): void => {
-      try {
-        Cookies.set(name, value, { 
-          expires: 30, 
-          path: '/',
-          sameSite: 'strict',
-          secure: process.env.NODE_ENV === 'production',
-        });
-      } catch (error) {
-        console.error("Error setting cookie:", error);
-      }
-    },
-    removeItem: (name: string): void => {
-      try {
-        Cookies.remove(name, { path: '/' });
-      } catch (error) {
-        console.error("Error removing cookie:", error);
-      }
-    },
-  };
+const cookieStorage = {
+  getItem: (name: string): string | null => {
+    try {
+      return Cookies.get(name) ?? null;
+    } catch (err) {
+      console.error("cookie getItem error:", err);
+      return null;
+    }
+  },
+  setItem: (name: string, value: string): void => {
+    try {
+      Cookies.set(name, value, {
+        expires: 30,             
+        secure: process.env.NODE_ENV === "production",
+      });
+    } catch (err) {
+      console.error("cookie setItem error:", err);
+    }
+  },
+  removeItem: (name: string): void => {
+    try {
+      Cookies.remove(name);
+    } catch (err) {
+      console.error("cookie removeItem error:", err);
+    }
+  },
 };
 
 export const useAuthStore = create<AuthStore>()(
@@ -59,7 +74,11 @@ export const useAuthStore = create<AuthStore>()(
       user: null,
       token: null,
       setUser: (user) => {
-        set({ user, token: user.token ? user.token : get().token })
+        set({ user, token: user.token ?? get().token });
+      },
+      updateUser: (values)=>{
+        set({ user:{... get()?.user, ...values} });
+        
       },
       clearUser: () => {
         set({ user: null, token: null });
@@ -67,10 +86,10 @@ export const useAuthStore = create<AuthStore>()(
     }),
     {
       name: "auth-storage",
-      storage: createJSONStorage(()=>(localStorage)),
-      partialize: (state) => ({ 
-        user: state.user, 
-        token: state.token 
+      storage: createJSONStorage(() => cookieStorage),
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
       }),
     }
   )

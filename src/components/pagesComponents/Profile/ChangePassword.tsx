@@ -34,29 +34,24 @@ export default function ChangePasswordForm() {
       label: t('form.currentPasswordLabel'),
       placeholder: t('form.passwordPlaceholder'),
       span: 2,
-      control: {} as Control<FormData>,
     },
     {
       type: 'password',
       name: 'password',
       label: t('form.newPasswordLabel'),
       placeholder: t('form.newPasswordPlaceholder'),
-      span: 1,
-      control: {} as Control<FormData>,
     },
     {
       type: 'password',
       name: 'password_confirmation',
       label: t('form.confirmPasswordLabel'),
       placeholder: t('form.confirmPasswordPlaceholder'),
-      span: 1,
-      control: {} as Control<FormData>,
     },
   ]
 
   const { mutate, isPending } = useMutate<ApiResponse, any>({
-    mutationKey: ['profile/update'],
-    endpoint: 'profile/update',
+    mutationKey: ['profile/change-password'],
+    endpoint: 'profile/change-password',
     onSuccess: (data) => {
       toast.success(data.message)
     },
@@ -68,11 +63,7 @@ export default function ChangePasswordForm() {
   })
 
   const handleSubmit = (values: FormData) => {
-    const payload = {
-      ...values,
-      _method: 'put',
-    }
-    mutate(payload)
+    mutate(values)
   }
 
   return (
@@ -90,7 +81,7 @@ export default function ChangePasswordForm() {
       spacing="md"
       className="bg-card border border-border rounded-lg shadow-sm"
       formClassName="p-6"
-      submitButtonText={t('buttons.edit')}
+      submitButtonText={t('buttons.confirm')}
     />
   )
 }

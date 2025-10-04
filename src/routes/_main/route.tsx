@@ -11,17 +11,33 @@ import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/authStore'
 import ConfirmModal from '@/components/common/uiComponents/ConfirmModal'
 import { useAlertModal } from '@/stores/useAlertModal'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute('/_main')({
   beforeLoad:({location})=>{
-    console.log("seAuthStore.getState().user",useAuthStore.getState().user)
-    if(!useAuthStore.getState().user){
+    const user = useAuthStore.getState().user;
+    if(!useAuthStore.getState().token){
        throw redirect({
         to: '/auth/login',
         search: {
-          // Use the current location to power a redirect after login
-          // (Do not use `router.state.resolvedLocation` as it can
-          // potentially lag behind the actual current location)
+          redirect: location.href,
+        },
+      })
+    }
+    if(user?.is_banned){
+      toast('your account had bannded')
+       throw redirect({
+        to: '/auth/login',
+        search: {
+          redirect: location.href,
+        },
+      })
+    }
+    if(!user?.is_active){
+       toast('your account not activated')
+       throw redirect({
+        to: '/auth/login',
+        search: {
           redirect: location.href,
         },
       })

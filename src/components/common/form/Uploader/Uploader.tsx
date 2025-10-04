@@ -328,13 +328,7 @@ const AppUploader = <T extends object = Record<string, any>>({
     <div className="w-full">
       {!hideTitle && (
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-foreground">
-            {type_file === 'image'
-              ? 'Image Upload'
-              : type_file === 'document'
-                ? 'Document Upload'
-                : 'Media Upload'}
-          </h3>
+          <div></div>
           <span className="text-sm text-muted-foreground">
             {fileList.length}
             {maxCount ? `/${maxCount}` : ''} files

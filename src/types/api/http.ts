@@ -15,7 +15,12 @@ export interface ApiResponse<T = unknown,K extends string | number | symbol = st
     meta?: Meta 
   }
   message: string 
-  status: 'success' | 'fail' | 'error' // Status of the response indicating success, failure, or error
+  status: 'success' | 'fail' | 'error' 
+}
+export interface ApiResponseBase<T = unknown> {
+  data: T
+  message: string 
+  status: 'success' | 'fail' | 'error' 
 }
 
 

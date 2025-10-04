@@ -12,9 +12,9 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
-import { Country } from "@/types/api/country";
+import { Country, CountryDetails } from "@/types/api/country";
 import useFetch from "@/hooks/UseFetch";
-import { ApiResponse } from "@/types/api/http";
+import { ApiResponse, ApiResponseBase } from "@/types/api/http";
 
 interface CountryCodeData {
   id: number;
@@ -44,11 +44,11 @@ function PhoneField<T extends FieldValues>({
   disabled = false,
 }: PhoneNumberProps<T>) {
   const {t} = useTranslation();
-    const { data, isPending } = useFetch<ApiResponse<Country[]>, CountryCodeData[]>({
-      queryKey: [`countries_without_pagination`],
-      endpoint: 'countries_without_pagination',
+    const { data, isPending } = useFetch<ApiResponseBase<CountryDetails[]>, CountryCodeData[]>({
+      queryKey: [`countries`],
+      endpoint: 'countries',
       select: (data)=>{
-        return data.data.map(item=>({ id: item.id, name: item.name, flag: item.flag.media, phone_code: item.phone_code } as unknown as CountryCodeData))
+        return data.data.map(item=>({ id: item.id, name: item.short_name, flag: item.flag, phone_code: item.phone_code } as unknown as CountryCodeData))
       },
       staleTime: 180_000,
     })  
