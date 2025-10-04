@@ -1,5 +1,5 @@
 import MainPageWrapper, { breadcrumbItem } from '@/components/layout/MainPageWrapper'
-import CountryForm from '@/components/pagesComponents/Settings/countries/Form'
+import CountryForm from '@/components/pagesComponents/Settings/Countries/Form'
 import { createFileRoute } from '@tanstack/react-router'
 import { Flag, Home, Plus } from 'lucide-react'
 import { useTranslation } from 'react-i18next'

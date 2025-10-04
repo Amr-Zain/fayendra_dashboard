@@ -1,5 +1,5 @@
 import MainPageWrapper, { breadcrumbItem } from '@/components/layout/MainPageWrapper'
-import CountryForm from '@/components/pagesComponents/Settings/countries/Form'
+import CountryForm from '@/components/pagesComponents/Settings/Countries/Form'
 import useFetch from '@/hooks/UseFetch'
 import { RouterContext } from '@/main'
 import { CountryDetails } from '@/types/api/country'

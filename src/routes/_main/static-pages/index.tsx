@@ -25,7 +25,7 @@ export const Route = createFileRoute('/_main/static-pages/')({
       page: search?.page as string,
       is_ban: search.is_ban as string,
       is_active: search.is_active as string,
-      keyword: search.keyword as string,
+      keyword: search.search as string,
     }
     return searchParams
   },

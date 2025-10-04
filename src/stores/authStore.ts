@@ -21,7 +21,6 @@ interface AuthStore {
   clearUser: () => void;
 }
 
-// Create a custom storage object for Zustand that uses js-cookie
 const createCookieStorage = () => {
   return {
     getItem: (name: string): string | null => {
@@ -34,7 +33,6 @@ const createCookieStorage = () => {
     },
     setItem: (name: string, value: string): void => {
       try {
-        // Set cookie with 30 days expiration and appropriate options
         Cookies.set(name, value, { 
           expires: 30, 
           path: '/',

@@ -89,16 +89,15 @@ const Cities = ({ data }: { data: ApiResponse<City[], 'cities'> }) => {
   )
 
   return (
-    <>
       <DataTable
         data={data.data.cities}
-        columns={cityColumns(openAlert)}   // ✅ pass openAlert here
+        columns={cityColumns(openAlert)}   
         searchKey="search"
         filters={filters}
         pagination
         meta={data.data.meta!}
         actions={RowActions({
-          actions: actions(openAlert),     // ✅ and here
+          actions: actions(openAlert),   
           menuLabel: 'Actions',
         })}
         toolbar={customToolbar}
@@ -110,9 +109,7 @@ const Cities = ({ data }: { data: ApiResponse<City[], 'cities'> }) => {
         }}
         resizable
         enableUrlState
-        exports={{ name: 'cities' }}
       />
-    </>
   )
 }
 

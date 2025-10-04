@@ -4,6 +4,8 @@ import { hasPermission } from '@/util/helpers'
 import { Filter } from '@/types/components/table'
 import { citiesQueryKeys } from '@/util/queryKeysFactory'
 import { createdAtColumn, statusColumn, textColumn } from '@/components/features/sharedColumns'
+import { FieldProp } from '@/types/components/form'
+import { CityFormData } from './CityFrom'
 
 
 
@@ -71,3 +73,52 @@ export const filters: Filter[] = [
     multiple: false,
     },
 ]
+export const fields: FieldProp<CityFormData>[] = [
+    {
+      type: 'select',
+      name: 'country_id',
+      label: 'Country',
+      inputProps: {
+        endpoint: 'countries',
+        select: (data) =>
+          (data.data as unknown as City[]).map((c) => ({
+            label: c.name,
+            value: String(c.id),
+          })),
+        placeholder: 'Select country',
+      },
+      span: 1,
+    },
+    {
+      type: 'text',
+      name: 'postal_code',
+      label: 'Postal Code',
+      placeholder: 'e.g. 5477',
+    },
+
+    {
+      type: 'multiLangField',
+      name: 'name' as any,
+      label: 'English Name',
+      placeholder: 'Mansoura',
+    },
+    {
+      type: 'multiLangField',
+      name: 'slug',
+      label: 'English Slug',
+      placeholder: 'mansoura',
+    },
+    {
+      type: 'text',
+      name: 'short_cut',
+      label: 'Short Code',
+      placeholder: 'e.g. mans',
+    },
+    {
+      type: 'map',
+      name: 'map',
+      label: 'Map',
+      placeholder: 'e.g. 30.0444',
+      span:2
+    },
+  ]

@@ -65,7 +65,6 @@ const StaticPages = ({ data }: { data: ApiResponse<StaticPage[], 'static_pages'>
       'Are you sure you want to delete this page permanently? This action cannot be undone.',
   } as const
 
-  // ✅ Now openAlert takes `row` instead of just (type, id)
   const openAlert = (type: 'active' | 'delete', row: StaticPage) => {
     setSelected({ id: row.id.toString(), type, isActive: row.is_active })
 
