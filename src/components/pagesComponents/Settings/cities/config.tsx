@@ -1,14 +1,10 @@
-import { ColumnHeader } from '@/components/common/table/ColumnHeader'
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table'
+import { ColumnDef } from '@tanstack/react-table'
 import { City, Country } from '@/types/api/country'
 import { hasPermission } from '@/util/helpers'
 import { Filter } from '@/types/components/table'
-import { Dispatch, SetStateAction } from 'react'
-import { Switch } from '@/components/ui/switch'
 import { citiesQueryKeys } from '@/util/queryKeysFactory'
 import { createdAtColumn, statusColumn, textColumn } from '@/components/features/sharedColumns'
 
-const columnHelper = createColumnHelper<City>()
 
 
 export const cityColumns = (

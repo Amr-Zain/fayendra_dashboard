@@ -43,7 +43,7 @@ export default function CityForm({ city }: { city?: City }) {
       inputProps: {
         endpoint: 'countries',
         select: (data) =>
-          (data.data as unknown as Country[]).map((c) => ({
+          (data.data as unknown as City[]).map((c) => ({
             label: c.name,
             value: String(c.id),
           })),

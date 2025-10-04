@@ -5,15 +5,12 @@ import { Flag, Home, Plus } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/_main/settings/countries/add')({
-
-
   component: () => {
     const { t } = useTranslation()
      const breadcrumbItems: breadcrumbItem[] = [
     { label: t('pages.home'), icon: <Home />, to: '/' },
     { label: t('pages.countries'), icon: <Flag />, to: '/settings/countries' },
     {label: t('buttons.add'), icon: <Plus />}
-
   ]
 
   return (

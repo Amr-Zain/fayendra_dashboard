@@ -1,58 +1,28 @@
-import { ColumnHeader } from '@/components/common/table/ColumnHeader'
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table'
+import { ColumnDef } from '@tanstack/react-table'
 import { Filter } from '@/types/components/table'
-import { Switch } from '@/components/ui/switch'
-import { Dispatch, SetStateAction } from 'react'
-import { hasPermission } from '@/util/helpers'
 import { countriesQueryKeys } from '@/util/queryKeysFactory'
 import { createdAtColumn, imageColumn, statusColumn, textColumn } from '@/components/features/sharedColumns'
-
-export type Country = {
-  id: number
-  name: string
-  slug: string
-  short_name: string
-  phone_code: number
-  phone_length: number
-  currency: string
-  nationality: string
-  flag: string | null
-  continent:
-    | 'africa'
-    | 'asia'
-    | 'europe'
-    | 'north-america'
-    | 'south-america'
-    | 'australia'
-    | 'antarctica'
-    | string
-  is_active: boolean
-  created_at: string
-}
-
-
-
-const columnHelper = createColumnHelper<Country>()
+import { CountryDetails } from '@/types/api/country'
 
 export const countryColumns = (
-  open: (type: 'active' | 'delete', row: Country) => void,
-): ColumnDef<Country>[] => [
-  imageColumn<Country>('flag',"Flag"),
-  textColumn<Country>('name', 'Country Name', { sortable: false }),
-  textColumn<Country>('short_name', 'Code'),
-  textColumn<Country>('phone_code', 'Phone Code', {
+  open: (type: 'active' | 'delete', row: CountryDetails) => void,
+): ColumnDef<CountryDetails>[] => [
+  imageColumn<CountryDetails>('flag',"Flag"),
+  textColumn<CountryDetails>('name', 'Country Name', { sortable: false }),
+  textColumn<CountryDetails>('short_name', 'Code'),
+  textColumn<CountryDetails>('phone_code', 'Phone Code', {
     render: ({ getValue }) => <div className="text-muted-foreground">+{getValue()}</div>,
   }),
-  textColumn<Country>('phone_length', 'Phone Length'),
-  textColumn<Country>('currency', 'Currency'),
-  textColumn<Country>('nationality', 'Nationality'),
-  textColumn<Country>('continent', 'Continent', {
+  textColumn<CountryDetails>('phone_length', 'Phone Length'),
+  textColumn<CountryDetails>('currency', 'Currency'),
+  textColumn<CountryDetails>('nationality', 'Nationality'),
+  textColumn<CountryDetails>('continent', 'Continent', {
     render: ({ getValue }) => (
       <div className="text-muted-foreground capitalize">{String(getValue() ?? '')}</div>
     ),
   }),
-  statusColumn<Country>(open),          
-  createdAtColumn<Country>('Created'),  
+  statusColumn<CountryDetails>(open),          
+  createdAtColumn<CountryDetails>('Created'),  
 ]
 
 export const countryFilters: Filter[] = [
@@ -67,14 +37,14 @@ export const countryFilters: Filter[] = [
 ]
 
 export const actions = (
-  open: (type: 'active' | 'delete', row: Country) => void,
+  open: (type: 'active' | 'delete', row: CountryDetails) => void,
 ) => [
   {
     label: 'Edit',
     to: '/settings/countries/edit/$id',
-    params: (row: Country) => ({ id: row.id.toString() }),
+    params: (row: CountryDetails) => ({ id: row.id.toString() }),
     queryKey: (id: string) => countriesQueryKeys.getCountry(id),
   },
-  { label: 'Delete', danger: true, onClick: (row: Country) => open('delete', row) },
-  { label: 'Activate/Deactivate country', onClick: (row: Country) => open('active', row) },
+  { label: 'Delete', danger: true, onClick: (row: CountryDetails) => open('delete', row) },
+  { label: 'Activate/Deactivate country', onClick: (row: CountryDetails) => open('active', row) },
 ]

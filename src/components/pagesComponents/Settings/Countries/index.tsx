@@ -3,14 +3,15 @@ import { useTranslation } from 'react-i18next'
 import { ApiResponse } from '@/types/api/http'
 import { DataTable } from '@/components/common/table/AppTable'
 import { Link, useSearch } from '@tanstack/react-router'
-import { countryColumns, countryFilters, Country, actions } from './Config'
+import { countryColumns, countryFilters, actions } from './Config'
 import { RowActions } from '@/components/common/table/RowActions'
 import { useStatusMutation } from '@/hooks/useStatusMutations'
 import { useState, useEffect } from 'react'
 import { countriesQueryKeys } from '@/util/queryKeysFactory'
 import { useAlertModal } from '@/stores/useAlertModal'
+import { CountryDetails } from '@/types/api/country'
 
-type CountriesApi = ApiResponse<Country[], 'countries'> | { data: Country[] }
+type CountriesApi = ApiResponse<CountryDetails[], 'countries'> | { data: CountryDetails[] }
 
 const Countries = ({ data }: { data: CountriesApi }) => {
   const { t } = useTranslation()
@@ -21,7 +22,7 @@ const Countries = ({ data }: { data: CountriesApi }) => {
     Array.isArray((data as any).data?.countries)
       ? (data as any).data.countries
       : (data as any).data
-  ) as Country[]
+  ) as CountryDetails[]
 
   const [selected, setSelected] = useState<{
     id: string
@@ -64,7 +65,7 @@ const Countries = ({ data }: { data: CountriesApi }) => {
       'Are you sure you want to delete this Country permanently? This action cannot be undone.',
   }
 
-  const openAlert = (type: 'active' | 'delete', row: Country) => {
+  const openAlert = (type: 'active' | 'delete', row: CountryDetails) => {
     setSelected({ id: row.id.toString(), type, isActive: row.is_active })
 
     const handler = async () => {

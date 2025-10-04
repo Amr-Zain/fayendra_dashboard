@@ -8,33 +8,8 @@ import { ApiResponse } from '@/types/api/http'
 import { useNavigate } from '@tanstack/react-router'
 import { generateFinalOut, generateInitialValues } from '@/util/helpers'
 import { countriesQueryKeys } from '@/util/queryKeysFactory'
+import { CountryDetails } from '@/types/api/country'
 
-export type Country = {
-  id?: number
-  is_active?: boolean | number
-  phone_code: number
-  phone_length: number
-  short_name: string
-  continent:
-    | 'africa'
-    | 'europe'
-    | 'asia'
-    | 'south_america'
-    | 'north_america'
-    | 'australia'
-    | 'antarctica'
-  flag?: string | null
-
-  // فقط EN و AR
-  name_en?: string
-  slug_en?: string
-  currency_en?: string
-  nationality_en?: string
-  name_ar?: string
-  slug_ar?: string
-  currency_ar?: string
-  nationality_ar?: string
-}
 
 const schema = z.object({
   is_active: z.union([z.boolean(), z.number().int().min(0).max(1)]).optional(),
@@ -71,7 +46,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-export default function CountryForm({ country }: { country?: Country }) {
+export default function CountryForm({ country }: { country?: CountryDetails }) {
   const navigate = useNavigate()
 
   const fields: FieldProp<FormData>[] = [

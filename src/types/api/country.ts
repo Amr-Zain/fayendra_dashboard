@@ -6,6 +6,28 @@ export interface Country {
   flag: string | null
 }
 
+export type CountryDetails = {
+  id: number
+  name: string
+  slug: string
+  short_name: string
+  phone_code: number
+  phone_length: number
+  currency: string
+  nationality: string
+  flag: string | null
+  continent:
+    | 'africa'
+    | 'asia'
+    | 'europe'
+    | 'north-america'
+    | 'south-america'
+    | 'australia'
+    | 'antarctica'
+    | string
+  is_active: boolean
+  created_at: string
+}
 export interface Location {
   lat: number
   lng: number
